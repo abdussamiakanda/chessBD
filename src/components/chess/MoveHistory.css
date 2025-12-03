@@ -79,6 +79,9 @@
   flex-direction: column;
   gap: 0.125rem;
   min-height: 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
 }
 
 .move-history-empty {

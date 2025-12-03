@@ -5,50 +5,87 @@ import './MoveHistory.css'
 export function MoveHistory({ moves, currentMoveIndex, onMoveClick, flipped = false, moveQuality = [] }) {
   const scrollRef = useRef(null)
   const containerRef = useRef(null)
+  const prevMoveIndexRef = useRef(currentMoveIndex)
 
   // Scroll to current move when it changes
   useEffect(() => {
-    if (scrollRef.current && currentMoveIndex !== null) {
-      const moveElement = scrollRef.current.querySelector(`[data-move-index="${currentMoveIndex}"]`)
-      if (moveElement && scrollRef.current) {
-        const container = scrollRef.current
-        const containerRect = container.getBoundingClientRect()
-        const elementRect = moveElement.getBoundingClientRect()
-        
-        // Check if element is outside the visible area
-        const isAbove = elementRect.top < containerRect.top
-        const isBelow = elementRect.bottom > containerRect.bottom
-        
-        if (isAbove || isBelow) {
-          // Calculate scroll position to center the element in view
-          const elementOffsetTop = moveElement.offsetTop
-          const containerHeight = container.clientHeight
-          const elementHeight = moveElement.offsetHeight
-          
-          // Calculate desired scroll position (center the element)
-          const desiredScrollTop = elementOffsetTop - (containerHeight / 2) + (elementHeight / 2)
-          
-          // Smooth scroll within the container only
-          container.scrollTo({
-            top: desiredScrollTop,
-            behavior: 'smooth'
-          })
-        }
-      }
+    if (!scrollRef.current) return
+    
+    const prevMoveIndex = prevMoveIndexRef.current
+    const currentIndex = currentMoveIndex
+    
+    // Don't scroll if move index is -1 (start position)
+    if (currentIndex === -1) {
+      prevMoveIndexRef.current = currentIndex
+      return
     }
+    
+    // Handle start position (null or negative, but not -1)
+    if (currentIndex === null || currentIndex < 0) {
+      prevMoveIndexRef.current = currentIndex
+      return
+    }
+    
+    // Find the move element
+    const moveElement = scrollRef.current.querySelector(`[data-move-index="${currentIndex}"]`)
+    if (!moveElement) {
+      prevMoveIndexRef.current = currentIndex
+      return
+    }
+    
+    // Get the move pair container (parent element that contains both white and black moves)
+    const movePair = moveElement.closest('.move-history-pair')
+    if (!movePair) {
+      prevMoveIndexRef.current = currentIndex
+      return
+    }
+    
+    const container = scrollRef.current
+    const itemHeight = movePair.offsetHeight
+    
+    // Calculate which move pair we're on (each pair contains 2 moves: white and black)
+    const currentPairIndex = Math.floor(currentIndex / 2)
+    const prevPairIndex = prevMoveIndex !== null && prevMoveIndex >= 0 ? Math.floor(prevMoveIndex / 2) : -1
+    
+    // Calculate how many pairs to scroll (difference between current and previous pair)
+    const pairDifference = currentPairIndex - prevPairIndex
+    
+    // Only scroll if we moved to a different pair
+    if (pairDifference !== 0) {
+      const currentScrollTop = container.scrollTop
+      const scrollAmount = pairDifference * itemHeight
+      const newScrollTop = currentScrollTop + scrollAmount
+      
+      // Clamp scroll position to valid range
+      const maxScroll = container.scrollHeight - container.clientHeight
+      const clampedScroll = Math.max(0, Math.min(newScrollTop, maxScroll))
+      
+      // Scroll by exactly one item height per pair
+      container.scrollTo({
+        top: clampedScroll,
+        behavior: 'smooth'
+      })
+    }
+    
+    // Update previous move index
+    prevMoveIndexRef.current = currentIndex
   }, [currentMoveIndex])
 
   // Auto-scroll to bottom when a new move is added (user is at the latest move)
   useEffect(() => {
     if (scrollRef.current && moves.length > 0) {
-      const isAtLatestMove = currentMoveIndex === null || currentMoveIndex === moves.length - 1
+      const isAtLatestMove = currentMoveIndex !== null && currentMoveIndex === moves.length - 1
       if (isAtLatestMove) {
-        // Scroll to bottom to show the latest move
-        const container = scrollRef.current
-        container.scrollTo({
-          top: container.scrollHeight,
-          behavior: 'smooth'
-        })
+        // Small delay to ensure DOM is updated
+        setTimeout(() => {
+          if (scrollRef.current) {
+            const container = scrollRef.current
+            container.scrollTo({
+              top: container.scrollHeight,
+              behavior: 'smooth'
+            })
+          }
+        }, 50)
       }
     }
   }, [moves.length, currentMoveIndex])

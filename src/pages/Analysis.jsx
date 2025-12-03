@@ -49,6 +49,9 @@ export function Analysis() {
   const lastAnalyzedFen = useRef(null)
   const pasteTimeoutRef = useRef(null)
   const [boardOrientation, setBoardOrientation] = useState('white')
+  const boardWrapperRef = useRef(null)
+  const evalBarRef = useRef(null)
+  const [evalBarHeight, setEvalBarHeight] = useState(null)
   
   const [initialPgn, setInitialPgn] = useState(location.state?.pgn || null)
   const username = user?.username || user?.chesscom_username || ''
@@ -1258,6 +1261,132 @@ export function Analysis() {
     return arrow
   }, [pgnAnalysis, currentMoveIndex, isReviewMode])
 
+  // Get current evaluation for the evaluation bar
+  const currentEvaluation = useMemo(() => {
+    if (!pgnAnalysis || !pgnAnalysis.moves) {
+      return null
+    }
+    
+    // If at the starting position (currentMoveIndex is null or -1), return neutral evaluation
+    if (currentMoveIndex === null || currentMoveIndex < 0) {
+      return { type: 'cp', value: 0 } // Neutral position
+    }
+    
+    // Get evaluation after the current move
+    if (currentMoveIndex >= 0 && currentMoveIndex < pgnAnalysis.moves.length) {
+      const moveData = pgnAnalysis.moves[currentMoveIndex]
+      // If score_after exists, use it; otherwise use score_before or default to 0
+      if (moveData && moveData.score_after) {
+        return moveData.score_after
+      } else if (moveData && moveData.score_before) {
+        return moveData.score_before
+      } else {
+        return { type: 'cp', value: 0 } // Default to neutral if no evaluation
+      }
+    }
+    
+    // If at the end, get the last move's score_after
+    if (currentMoveIndex >= pgnAnalysis.moves.length && pgnAnalysis.moves.length > 0) {
+      const lastMove = pgnAnalysis.moves[pgnAnalysis.moves.length - 1]
+      if (lastMove && lastMove.score_after) {
+        return lastMove.score_after
+      } else {
+        return { type: 'cp', value: 0 } // Default to neutral if no evaluation
+      }
+    }
+    
+    return { type: 'cp', value: 0 } // Default to neutral
+  }, [pgnAnalysis, currentMoveIndex])
+
+  // Format evaluation for display (like Chess.com)
+  const formatEvaluation = (evalData) => {
+    if (!evalData) return null
+    
+    if (evalData.type === 'mate') {
+      const mateValue = evalData.value
+      const mateIn = Math.ceil(Math.abs(mateValue) / 2)
+      if (mateValue > 0) {
+        return `M${mateIn}` // Mate for white
+      } else {
+        return `-M${mateIn}` // Mate for black
+      }
+    } else {
+      // Centipawns - convert to pawns and show with +/-
+      const pawns = (evalData.value / 100).toFixed(1)
+      if (evalData.value > 0) {
+        return `+${pawns}`
+      } else if (evalData.value < 0) {
+        return pawns
+      } else {
+        return '0.0'
+      }
+    }
+  }
+
+  // Calculate win percentage for the bar (0-100, where 50 is equal)
+  const getEvalBarWinPercentage = (evalData) => {
+    if (!evalData) return 50
+    
+    if (evalData.type === 'mate') {
+      return evalData.value > 0 ? 100 : 0
+    } else {
+      // Convert centipawns to win percentage
+      const cp = evalData.value
+      const cpCeiled = Math.max(-1000, Math.min(1000, cp))
+      const MULTIPLIER = -0.00368208
+      const winChances = 2 / (1 + Math.exp(MULTIPLIER * cpCeiled)) - 1
+      return 50 + 50 * winChances
+    }
+  }
+
+  // Calculate win percentage and evaluation text based on board orientation
+  const isFlipped = boardOrientation === 'black'
+  // baseWinPercentage is from white's perspective: 100 = white wins, 0 = black wins
+  const baseWinPercentage = currentEvaluation ? getEvalBarWinPercentage(currentEvaluation) : 50
+  const whiteWinPercentage = baseWinPercentage // White's win percentage
+  const blackWinPercentage = 100 - baseWinPercentage // Black's win percentage
+  
+  // Invert evaluation for display when board is flipped
+  const getFlippedEvaluation = (evalData) => {
+    if (!evalData) return null
+    return {
+      type: evalData.type,
+      value: -evalData.value // Invert the value
+    }
+  }
+  const displayEvaluation = isFlipped && currentEvaluation ? getFlippedEvaluation(currentEvaluation) : currentEvaluation
+  const evalText = displayEvaluation ? formatEvaluation(displayEvaluation) : '0.0'
+  
+  const isNavigating = currentMoveIndex !== null
+  const shouldShowEvalBar = isNavigating && pgnAnalysis && pgnAnalysis.moves
+
+  // Update evaluation bar height to match board wrapper inner (excluding player info)
+  useEffect(() => {
+    if (!shouldShowEvalBar || !boardWrapperRef.current) return
+
+    const updateEvalBarHeight = () => {
+      const boardWithPlayers = boardWrapperRef.current?.querySelector('.chess-board-with-players')
+      const boardWrapperInner = boardWithPlayers?.querySelector('.chess-board-wrapper-inner')
+      
+      if (boardWrapperInner) {
+        const height = boardWrapperInner.offsetHeight
+        setEvalBarHeight(height)
+      }
+    }
+
+    updateEvalBarHeight()
+    
+    // Update on resize
+    const resizeObserver = new ResizeObserver(updateEvalBarHeight)
+    if (boardWrapperRef.current) {
+      resizeObserver.observe(boardWrapperRef.current)
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [shouldShowEvalBar, game, whitePlayer, blackPlayer, boardOrientation])
+
   if (authLoading) {
     return <PageLoader />
   }
@@ -1265,11 +1394,15 @@ export function Analysis() {
   return (
     <div className="analysis-page">
       <div className="analysis-container">
-        <div className="analysis-board-section" ref={sectionRef}>
+        <div 
+          className={`analysis-board-section ${shouldShowEvalBar ? 'analysis-board-section-with-eval' : ''}`} 
+          ref={sectionRef}
+        >
+          <div className="analysis-board-wrapper" ref={boardWrapperRef}>
           <ChessBoard
             position={game.fen()}
             onMove={handleMove}
-            flipped={boardOrientation === 'black'}
+              flipped={boardOrientation === 'black'}
             arePiecesDraggable={false}
             allowSquareClicks={false}
             allowFreeMoves={false}
@@ -1285,6 +1418,64 @@ export function Analysis() {
             moveQuality={moveQualityMap}
             bestMoveArrow={bestMoveArrow}
           />
+            {shouldShowEvalBar && (
+              <div 
+                className="analysis-eval-bar" 
+                ref={evalBarRef}
+                style={{ 
+                  height: evalBarHeight ? `${evalBarHeight}px` : undefined,
+                  minHeight: evalBarHeight ? undefined : '200px'
+                }}
+              >
+                {/* Bar aligns with player positions: top of bar = top player, bottom of bar = bottom player */}
+                {/* When normal (flipped=false): top player = black, bottom player = white */}
+                {/* When flipped (flipped=true): top player = white, bottom player = black */}
+                {/* baseWinPercentage is from white's perspective, so whiteWinPercentage = baseWinPercentage, blackWinPercentage = 100 - baseWinPercentage */}
+                {isFlipped ? (
+                  <>
+                    {/* White fill (top portion when flipped - white player is on top) */}
+                    <div 
+                      className="analysis-eval-bar-fill analysis-eval-bar-fill-white" 
+                      style={{ 
+                        height: `${whiteWinPercentage}%`,
+                        top: 0
+                      }} 
+                    />
+                    {/* Black fill (bottom portion when flipped - black player is on bottom) */}
+                    <div 
+                      className="analysis-eval-bar-fill analysis-eval-bar-fill-black" 
+                      style={{ 
+                        height: `${blackWinPercentage}%`,
+                        bottom: 0
+                      }} 
+                    />
+                  </>
+                ) : (
+                  <>
+                    {/* Black fill (top portion when normal - black player is on top) */}
+                    <div 
+                      className="analysis-eval-bar-fill analysis-eval-bar-fill-black" 
+                      style={{ 
+                        height: `${blackWinPercentage}%`,
+                        top: 0
+                      }} 
+                    />
+                    {/* White fill (bottom portion when normal - white player is on bottom) */}
+                    <div 
+                      className="analysis-eval-bar-fill analysis-eval-bar-fill-white" 
+                      style={{ 
+                        height: `${whiteWinPercentage}%`,
+                        bottom: 0
+                      }} 
+                    />
+                  </>
+                )}
+                <div className="analysis-eval-bar-text">
+                  {evalText || '0.0'}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="analysis-content-section">
@@ -1616,10 +1807,6 @@ export function Analysis() {
 
                 return (
                   <div className="analysis-position-data">
-                    <div className="analysis-position-header">
-                      <h4>Move {Math.floor((currentMoveIndex + 1) / 2) + (currentMoveIndex % 2 === 0 ? 1 : 0)}{currentMoveIndex % 2 === 0 ? '' : '...'}</h4>
-                    </div>
-
                     {/* Position Info Grid */}
                     <div className="analysis-position-grid">
                       <div className="analysis-position-item">

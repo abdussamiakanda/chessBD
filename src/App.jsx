@@ -43,6 +43,7 @@ import { Engine } from './pages/Engine'
 import { Test } from './pages/Test'
 import { Bots } from './pages/Bots'
 import { BotGame } from './pages/BotGame'
+// import { Arena } from './pages/Arena'
 import { VideoTutorials } from './pages/learn/VideoTutorials'
 import { Puzzles } from './pages/Puzzles'
 import { InteractiveLessons } from './pages/learn/InteractiveLessons'
@@ -239,6 +240,7 @@ function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/bots" element={<Bots />} />
           <Route path="/bots/:botId" element={<BotGame />} />
+          {/* <Route path="/arena" element={<Arena />} /> */}
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/showcase" element={<Showcase />} />
           <Route path="/events" element={<Events />} />
