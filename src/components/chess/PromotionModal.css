@@ -1,0 +1,115 @@
+.promotion-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.promotion-modal {
+  background: var(--color-bg-secondary, #2a2a2a);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.2s ease-out;
+  min-width: 280px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.promotion-modal-title {
+  color: var(--color-text-primary, #ffffff);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.promotion-modal-pieces {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.promotion-modal-piece {
+  background: var(--color-bg-tertiary, #3a3a3a);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+}
+
+.promotion-modal-piece:hover {
+  background: var(--color-7, #4a4a4a);
+  border-color: var(--color-10, #60a5fa);
+  transform: scale(1.05);
+}
+
+.promotion-modal-piece:active {
+  transform: scale(0.95);
+}
+
+.promotion-piece-symbol {
+  font-size: 3rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.promotion-piece-symbol.w {
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.promotion-piece-symbol.b {
+  color: #000000;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
+}
+
+@media (max-width: 768px) {
+  .promotion-modal {
+    min-width: 240px;
+    padding: 1.25rem;
+  }
+
+  .promotion-modal-pieces {
+    gap: 0.75rem;
+  }
+
+  .promotion-modal-piece {
+    padding: 1.25rem;
+  }
+
+  .promotion-piece-symbol {
+    font-size: 2.5rem;
+  }
+}
+

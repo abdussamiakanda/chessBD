@@ -1,0 +1,1246 @@
+/* Hero Section */
+.watch-hero {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .watch-hero {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-hero {
+    margin-bottom: 3rem;
+  }
+}
+
+.watch-hero-content {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .watch-hero-content {
+    margin-bottom: 2rem;
+  }
+}
+
+.watch-hero-label {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.5 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .watch-hero-label {
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+.watch-hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  margin-top: 0 !important;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .watch-hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-hero-title {
+    font-size: 3rem;
+  }
+}
+
+.watch-hero-description {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .watch-hero-description {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-hero-description {
+    font-size: 1.125rem;
+  }
+}
+
+/* Tabs */
+.watch-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .watch-tabs {
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.watch-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .watch-tab {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+.watch-tab:hover {
+  border-color: var(--color-bg-active);
+  background: var(--color-3);
+  color: var(--color-10);
+}
+
+.watch-tab:focus {
+  outline: none;
+}
+
+.watch-tab-active {
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  opacity: 0.3;
+  border-color: transparent !important;
+  opacity: 1 !important;
+}
+
+.watch-tab-active:hover {
+  opacity: 0.9 !important;
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  transform: translateY(-0.125rem);
+}
+
+.watch-tab-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Section */
+.watch-section {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .watch-section {
+    margin-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-section {
+    margin-bottom: 4rem;
+  }
+}
+
+.watch-section-header {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .watch-section-header {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.watch-section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.5;
+  margin: 0;
+}
+
+.watch-section-title {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-section-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-section-title {
+    font-size: 2.25rem;
+  }
+}
+
+.watch-section-description {
+  margin-top: 0.75rem;
+  max-width: 42rem;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .watch-section-description {
+    font-size: 1rem;
+  }
+}
+
+/* Grid */
+.watch-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .watch-grid {
+    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .watch-grid {
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.watch-skeleton {
+  height: 12rem;
+}
+
+/* Live Badge */
+.watch-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(239, 68, 68, 0.2);
+  color: rgb(248, 113, 113);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.watch-live-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  fill: rgb(248, 113, 113);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Game Card */
+.watch-game-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.watch-game-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.watch-game-card-glow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 5rem;
+  width: 5rem;
+  transform: translate(2.5rem, -2.5rem);
+  border-radius: 50%;
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  filter: blur(2rem);
+}
+
+.watch-game-live-indicator {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.watch-game-card-content {
+  position: relative;
+  padding: 1rem 1.25rem 0.75rem;
+  z-index: 10;
+}
+
+@media (min-width: 640px) {
+  .watch-game-card-content {
+    padding: 1.25rem 1.5rem 1rem;
+  }
+}
+
+.watch-game-time-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .watch-game-time-control {
+    margin-bottom: 1rem;
+  }
+}
+
+.watch-game-time-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-bg-active);
+  opacity: 0.7;
+}
+
+.watch-game-time-text {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .watch-game-time-text {
+    font-size: 0.875rem;
+  }
+}
+
+.watch-game-players {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .watch-game-players {
+    margin-bottom: 1rem;
+  }
+}
+
+.watch-game-player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
+}
+
+.watch-game-player-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.5;
+  margin-bottom: 0.25rem;
+}
+
+.watch-game-player-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.watch-game-player-rating {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+}
+
+.watch-game-chessbd-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-bg-active);
+  opacity: 0.2;
+  color: var(--color-bg-active);
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.watch-game-vs {
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  opacity: 0.4;
+}
+
+.watch-game-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.watch-game-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .watch-game-action-btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.watch-game-action-btn:hover {
+  border-color: var(--color-bg-active);
+  opacity: 0.5;
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  color: var(--color-bg-active);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-0.125rem);
+}
+
+.watch-game-action-btn-primary {
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+  border: none !important;
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  opacity: 0.3;
+}
+
+.watch-game-action-btn-primary:hover {
+  opacity: 0.9 !important;
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  transform: translateY(-0.125rem);
+}
+
+.watch-game-action-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.watch-game-action-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .watch-game-action-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Streamer Card */
+.watch-streamer-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.watch-streamer-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.watch-streamer-card-glow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 5rem;
+  width: 5rem;
+  transform: translate(2.5rem, -2.5rem);
+  border-radius: 50%;
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  filter: blur(2rem);
+}
+
+.watch-streamer-live-indicator {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.watch-streamer-card-content {
+  position: relative;
+  padding: 1rem 1.25rem 0.75rem;
+  z-index: 10;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-card-content {
+    padding: 1.25rem 1.5rem 1rem;
+  }
+}
+
+.watch-streamer-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-header {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.watch-streamer-platform-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-platform-icon-wrapper {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+.watch-streamer-platform-icon-wrapper-twitch {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(196, 181, 253, 0.3);
+}
+
+.watch-streamer-platform-icon-wrapper-youtube {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(252, 165, 165, 0.3);
+}
+
+.watch-streamer-platform-icon-wrapper-kick {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(134, 239, 172, 0.3);
+}
+
+.watch-streamer-platform-icon-wrapper-chesscom {
+  border-color: var(--color-icon-border);
+  background: var(--color-bg-secondary);
+}
+
+.watch-streamer-platform-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-platform-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.watch-streamer-platform-icon-twitch {
+  color: rgb(196, 181, 253);
+}
+
+.watch-streamer-platform-icon-youtube {
+  color: rgb(252, 165, 165);
+}
+
+.watch-streamer-platform-icon-kick {
+  color: rgb(134, 239, 172);
+}
+
+.watch-streamer-platform-icon-chesscom {
+  color: rgb(16, 185, 129);
+}
+
+.watch-streamer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.watch-streamer-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-name {
+    font-size: 1.25rem;
+  }
+}
+
+.watch-streamer-platform-name {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-platform-name {
+    font-size: 0.875rem;
+  }
+}
+
+.watch-streamer-title {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-title {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.watch-streamer-title-text {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-title-text {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-streamer-title-text {
+    font-size: 1rem;
+  }
+}
+
+.watch-streamer-viewers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-viewers {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.watch-streamer-viewers-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.watch-streamer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.watch-streamer-btn:hover {
+  transform: scale(1.05);
+}
+
+.watch-streamer-btn-twitch {
+  background: linear-gradient(to right, rgb(147, 51, 234), rgb(126, 34, 206));
+}
+
+.watch-streamer-btn-twitch:hover {
+  background: linear-gradient(to right, rgb(168, 85, 247), rgb(147, 51, 234));
+}
+
+.watch-streamer-btn-youtube {
+  background: linear-gradient(to right, rgb(239, 68, 68), rgb(220, 38, 38));
+}
+
+.watch-streamer-btn-youtube:hover {
+  background: linear-gradient(to right, rgb(248, 113, 113), rgb(239, 68, 68));
+}
+
+.watch-streamer-btn-kick {
+  background: linear-gradient(to right, rgb(34, 197, 94), rgb(22, 163, 74));
+}
+
+.watch-streamer-btn-kick:hover {
+  background: linear-gradient(to right, rgb(74, 222, 128), rgb(34, 197, 94));
+}
+
+.watch-streamer-btn-chesscom {
+  background: linear-gradient(to right, rgb(16, 185, 129), rgb(5, 150, 105));
+}
+
+.watch-streamer-btn-chesscom:hover {
+  background: linear-gradient(to right, rgb(52, 211, 153), rgb(16, 185, 129));
+}
+
+.watch-streamer-btn-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .watch-streamer-btn-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Tournament Card */
+.watch-tournament-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.watch-tournament-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.watch-tournament-card-glow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 5rem;
+  width: 5rem;
+  transform: translate(2.5rem, -2.5rem);
+  border-radius: 50%;
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  filter: blur(2rem);
+}
+
+.watch-tournament-live-indicator {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.watch-tournament-card-content {
+  position: relative;
+  padding: 1rem 1.25rem 0.75rem;
+  z-index: 10;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-card-content {
+    padding: 1.25rem 1.5rem 1rem;
+  }
+}
+
+.watch-tournament-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-header {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.watch-tournament-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-icon-wrapper {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+.watch-tournament-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-bg-active);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.watch-tournament-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.watch-tournament-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-name {
+    font-size: 1.25rem;
+  }
+}
+
+.watch-tournament-name:hover {
+  color: var(--color-bg-active);
+}
+
+.watch-tournament-description {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-description {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.watch-tournament-description-text {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-description-text {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-tournament-description-text {
+    font-size: 1rem;
+  }
+}
+
+.watch-tournament-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  opacity: 0.3;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+.watch-tournament-btn:hover {
+  opacity: 0.9;
+  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  transform: translateY(-0.125rem);
+}
+
+.watch-tournament-btn-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .watch-tournament-btn-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Empty/Error States */
+.watch-empty-card,
+.watch-error-card {
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .watch-empty-card,
+  .watch-error-card {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .watch-empty-card,
+  .watch-error-card {
+    padding: 3rem;
+  }
+}
+
+.watch-empty-content,
+.watch-error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.watch-empty-icon,
+.watch-error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+}
+
+@media (min-width: 640px) {
+  .watch-empty-icon,
+  .watch-error-icon {
+    height: 5rem;
+    width: 5rem;
+  }
+}
+
+.watch-empty-icon-svg,
+.watch-error-icon-svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-bg-active);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .watch-empty-icon-svg,
+  .watch-error-icon-svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.watch-empty-title,
+.watch-error-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .watch-empty-title,
+  .watch-error-title {
+    font-size: 1.5rem;
+  }
+}
+
+.watch-empty-description,
+.watch-error-description {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .watch-empty-description,
+  .watch-error-description {
+    font-size: 1rem;
+  }
+}
+
+.watch-error-message {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+  margin: 0.5rem 0 0 0;
+}
+
+@media (min-width: 640px) {
+  .watch-error-message {
+    font-size: 0.875rem;
+  }
+}
+
+/* Modal */
+.watch-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.watch-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-primary);
+  opacity: 0.95;
+  backdrop-filter: blur(4px);
+}
+
+.watch-modal-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 72rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.watch-modal-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.watch-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.watch-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.watch-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.watch-modal-close-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.watch-modal-close-btn:hover {
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  border-color: var(--color-bg-active);
+  opacity: 0.5;
+}
+
+.watch-modal-close-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.watch-modal-game-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.watch-modal-game-info {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.watch-modal-pgn-container {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.watch-modal-pgn {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.watch-modal-view-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-icon-border);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: fit-content;
+}
+
+.watch-modal-view-link:hover {
+  border-color: var(--color-bg-active);
+  opacity: 0.5;
+  background: var(--color-bg-active);
+  opacity: 0.1;
+  color: var(--color-bg-active);
+}
+
+.watch-modal-view-link-icon {
+  width: 1rem;
+  height: 1rem;
+}
+

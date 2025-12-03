@@ -1,0 +1,75 @@
+[
+  {
+    "id": "hasuapa",
+    "name": "Hasu Apa",
+    "description": "Hasu Apa is a dramatic chess bot with full apa authority. She'll roast your blunders with shady Banglish one-liners, file imaginary inquiries into your moves, and still play solid, exam-style chess. Challenge her if you're ready for both sharp tactics and spicy commentary.",
+    "strength": "Killer Instinct",
+    "icon": "hasina.svg",
+    "link": "/bots/hasuapa",
+    "active": false,
+    "blunder_level": 0.18,
+    "depth": 12,
+    "max_ms": 400
+  },
+  {
+    "id": "rickshawwalamama",
+    "name": "Rickshawwala Mama",
+    "description": "Rickshawwala Mama weaves through the board like Dhaka traffic. Expect zigzag attacks, cheeky shortcuts, and sudden tactical turns that feel like wrong-way entries on a one-way road. If you leave a file open, he'll treat it like a VIP lane straight to your king.",
+    "strength": "Traffic Tactician",
+    "icon": "rickshawwalamama.svg",
+    "link": "/bots/rickshawwalamama",
+    "active": true,
+    "blunder_level": 0.22,
+    "depth": 11,
+    "max_ms": 350
+  },
+  {
+    "id": "padmabridge",
+    "name": "Padma Bridge",
+    "description": "Padma Bridge is a slow, powerful positional grinder. She builds rock-solid structures, connects her pieces like pillars, and slowly squeezes your position until there's no way back. Great if you want to practice long games, patience, and serious endgame technique.",
+    "strength": "Endgame Engineer",
+    "icon": "padmabridge.svg",
+    "link": "/bots/padmabridge",
+    "active": true,
+    "blunder_level": 0.08,
+    "depth": 14,
+    "max_ms": 550
+  },
+  {
+    "id": "murgichor",
+    "name": "Murgi Chor",
+    "description": "Murgi Chor lives to steal hanging pieces. One loose knight, one unprotected bishop, and it's instantly added to tonight's biryani. He plays tricky, tactical chess with plenty of cheapos—perfect if you want to train your piece safety and blunder-spotting skills.",
+    "strength": "Piece Snatcher",
+    "icon": "murgichor.svg",
+    "link": "/bots/murgichor",
+    "active": true,
+    "blunder_level": 0.35,
+    "depth": 9,
+    "max_ms": 300
+  },
+  {
+    "id": "jhalmuriwala",
+    "name": "Jhalmuri Wala",
+    "description": "Jhalmuri Wala mixes positions the way he mixes muri—everything thrown together into a spicy tactical mess. Open lines, sacs, forks, and double attacks are his favorite ingredients. Great for players who enjoy chaos and want to sharpen their calculation under fire.",
+    "strength": "Spicy Attacker",
+    "icon": "jhalmuriwala.svg",
+    "link": "/bots/jhalmuriwala",
+    "active": true,
+    "blunder_level": 0.28,
+    "depth": 11,
+    "max_ms": 350
+  },
+  {
+    "id": "pocketmar",
+    "name": "Pocket Mar",
+    "description": "Pocket Mar doesn't always go for mate right away—he quietly pockets small advantages instead. A pawn here, an exchange there, and suddenly your position is broke. He's perfect if you want to practice avoiding small inaccuracies and understanding accumulation of advantage.",
+    "strength": "Silent Thief",
+    "icon": "pocketmar.svg",
+    "link": "/bots/pocketmar",
+    "active": true,
+    "blunder_level": 0.25,
+    "depth": 10,
+    "max_ms": 320
+  }
+]
+

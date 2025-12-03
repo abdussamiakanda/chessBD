@@ -1,0 +1,531 @@
+/* Spotlight Card */
+.spotlight-card {
+  padding: 1rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-sizing: border-box !important;
+}
+
+.spotlight-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  border-color: var(--color-border-dark) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card {
+    padding: 1.5rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .spotlight-card {
+    padding: 2rem !important;
+  }
+}
+
+.spotlight-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  z-index: 0 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.spotlight-card:hover::before {
+  opacity: 0.4 !important;
+}
+
+.spotlight-card-header {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  gap: 0.75rem !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-header {
+    gap: 1rem !important;
+  }
+}
+
+.spotlight-card-icon-wrapper {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 1rem !important;
+  background-color: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  flex-shrink: 0 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.spotlight-card:hover .spotlight-card-icon-wrapper {
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 5px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-icon-wrapper {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+}
+
+.spotlight-card-icon {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+.spotlight-card:hover .spotlight-card-icon {
+  transform: scale(1.1) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+}
+
+.spotlight-card-title-wrapper {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.spotlight-card-label {
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.5 !important;
+  margin: 0 !important;
+}
+
+.spotlight-card-title {
+  position: relative !important;
+  z-index: 1 !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--color-text-primary) !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  transition: color 0.3s ease !important;
+}
+
+.spotlight-card:hover .spotlight-card-title {
+  color: var(--color-bg-active) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-title {
+    font-size: 1.5rem !important;
+  }
+}
+
+.spotlight-card-subtitle {
+  position: relative !important;
+  z-index: 1 !important;
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.6 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-subtitle {
+    font-size: 0.875rem !important;
+  }
+}
+
+.spotlight-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.spotlight-card-skeleton-line {
+  height: 1.5rem;
+  background: var(--color-bg-secondary);
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+.spotlight-card-skeleton-line.short {
+  width: 60%;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-skeleton-line {
+    height: 2rem;
+  }
+}
+
+.spotlight-card-stats {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-bottom: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-stats {
+    gap: 1rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .spotlight-card-stats {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+.spotlight-card-stat {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.spotlight-card-stat-value {
+  font-size: 1.5rem !important;
+  font-weight: 900 !important;
+  color: var(--color-text-primary) !important;
+  line-height: 1 !important;
+  transition: transform 0.3s ease !important;
+}
+
+.spotlight-card:hover .spotlight-card-stat-value {
+  transform: scale(1.05) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-stat-value {
+    font-size: 1.875rem !important;
+  }
+}
+
+.spotlight-card-stat-label {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-stat-label {
+    font-size: 0.875rem !important;
+  }
+}
+
+.spotlight-card-stat-icon {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+  color: var(--color-bg-active) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-stat-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+}
+
+.spotlight-card-stat-text {
+  position: relative !important;
+  z-index: 1 !important;
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.7 !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-stat-text {
+    font-size: 0.875rem !important;
+  }
+}
+
+.spotlight-card-quote {
+  position: relative !important;
+  z-index: 1 !important;
+  margin: 1rem 0 !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-3) !important;
+  font-size: 0.75rem !important;
+  font-style: italic !important;
+  color: var(--color-10) !important;
+  opacity: 0.7 !important;
+  line-height: 1.6 !important;
+  transition: opacity 0.3s ease !important;
+  text-align: left !important;
+}
+
+.spotlight-card:hover .spotlight-card-quote {
+  opacity: 0.8 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-quote {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+.spotlight-card-description {
+  position: relative !important;
+  z-index: 1 !important;
+  margin: 1rem 0 !important;
+  padding: 0.25rem 0.75rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-3) !important;
+  font-size: 0.75rem !important;
+  font-style: italic !important;
+  color: var(--color-10) !important;
+  opacity: 0.7 !important;
+  line-height: 1.6 !important;
+  transition: opacity 0.3s ease !important;
+  text-align: left !important;
+}
+
+.spotlight-card:hover .spotlight-card-description {
+  opacity: 0.8 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-description {
+    font-size: 0.875rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .spotlight-card-description {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+.spotlight-card-actions {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-actions {
+    flex-direction: row !important;
+    gap: 0.75rem !important;
+  }
+}
+
+.spotlight-card-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-align: center !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-btn {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+.spotlight-card-btn.secondary {
+  border: 1px solid var(--color-icon-border) !important;
+  background: var(--color-3) !important;
+  color: var(--color-10) !important;
+}
+
+.spotlight-card-btn.secondary:hover {
+  border-color: var(--color-10) !important;
+  background: var(--color-4) !important;
+  color: var(--color-0) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  transform: translateY(-2px) !important;
+}
+
+.spotlight-card-btn.primary {
+  border: 1px solid var(--color-bg-active) !important;
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.spotlight-card-btn.primary:hover {
+  opacity: 0.9 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Avatar Section */
+.spotlight-card-avatar-section {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  margin-top: 1rem !important;
+}
+
+.spotlight-card-avatar {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 1rem !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.spotlight-card:hover .spotlight-card-avatar {
+  transform: scale(1.05) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-avatar {
+    width: 4rem !important;
+    height: 4rem !important;
+  }
+}
+
+.spotlight-card-avatar-placeholder {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 1rem !important;
+  background: var(--color-3) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-avatar-placeholder {
+    width: 4rem !important;
+    height: 4rem !important;
+  }
+}
+
+.spotlight-card-avatar-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.5 !important;
+}
+
+.spotlight-card-avatar-stats {
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.spotlight-card-avatar-stat-row {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.25rem !important;
+  flex-wrap: wrap !important;
+}
+
+.spotlight-card-avatar-stat-row .spotlight-card-stat-value {
+  font-size: 1.5rem !important;
+  font-weight: 900 !important;
+  color: var(--color-text-primary) !important;
+  line-height: 1 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-avatar-stat-row .spotlight-card-stat-value {
+    font-size: 1.875rem !important;
+  }
+}
+
+.spotlight-card-avatar-stat-row .spotlight-card-stat-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-avatar-stat-row .spotlight-card-stat-label {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Empty State */
+.spotlight-card-empty {
+  position: relative !important;
+  z-index: 1 !important;
+  text-align: center !important;
+  padding: 2rem 1rem !important;
+}
+
+.spotlight-card-empty-text {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.6 !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-empty-text {
+    font-size: 1rem !important;
+  }
+}
+
+.spotlight-card-empty-desc {
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.4 !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .spotlight-card-empty-desc {
+    font-size: 0.875rem !important;
+  }
+}
+

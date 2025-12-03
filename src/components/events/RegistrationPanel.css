@@ -1,0 +1,80 @@
+/* Registration Panel */
+.event-detail-register-loading-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-7);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.event-detail-register-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-10);
+  background: var(--color-3);
+  backdrop-filter: blur(4px);
+}
+
+.event-detail-register-badge-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-7);
+  flex-shrink: 0;
+}
+
+.event-detail-register-badge-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-7);
+}
+
+.event-detail-register-badge-not-registered .event-detail-register-badge-icon {
+  color: var(--color-7);
+  opacity: 0.7;
+}
+
+.event-detail-register-badge-not-registered .event-detail-register-badge-text {
+  color: var(--color-10);
+  opacity: 0.8;
+}
+
+.event-detail-register-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--color-1);
+  color: var(--color-10);
+  border: 1px solid var(--color-10);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  align-self: flex-start;
+}
+
+@media (min-width: 640px) {
+  .event-detail-register-button-secondary {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+.event-detail-register-button-secondary:hover {
+  border-color: var(--color-7);
+  background: var(--color-3);
+  opacity: 0.8;
+}
+

@@ -1,0 +1,25 @@
+/* Skeleton Component */
+.skeleton {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 0.5rem !important;
+  background: var(--color-bg-secondary) !important;
+}
+
+.skeleton-shimmer {
+  position: absolute !important;
+  inset: 0 !important;
+  transform: translateX(-100%) !important;
+  animation: shimmer 2s infinite !important;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent) !important;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) !important;
+  }
+  100% {
+    transform: translateX(100%) !important;
+  }
+}
+

@@ -1,0 +1,132 @@
+.search-bar-form {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.search-bar-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-primary);
+  opacity: 0.6;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.search-bar-input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-icon-border);
+  background-color: var(--color-bg-secondary);
+  padding: 0.75rem 2.5rem 0.75rem 2.75rem;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.search-bar-input::placeholder {
+  color: var(--color-text-primary);
+  opacity: 0.5;
+}
+
+.search-bar-input:focus {
+  border-color: var(--color-bg-active);
+  background-color: var(--color-bg-primary);
+  outline: none;
+}
+
+.search-bar-clear {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  outline: none;
+  border-radius: 0.25rem;
+}
+
+.search-bar-clear:hover {
+  opacity: 1;
+  background-color: var(--color-bg-secondary);
+}
+
+.search-bar-clear:focus {
+  outline: none;
+}
+
+.search-bar-clear-icon {
+  display: block;
+}
+
+.search-bar-submit {
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background-color: var(--color-bg-active);
+  color: var(--color-text-light);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+  font-family: inherit;
+}
+
+.search-bar-submit:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.search-bar-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.search-bar-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-bar-submit:focus {
+  outline: none;
+}
+
+.search-bar-submit-text {
+  display: none;
+}
+
+.search-bar-submit-icon {
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .search-bar-submit-text {
+    display: inline;
+  }
+}
+

@@ -1,0 +1,56 @@
+.bangladesh-map-container {
+  width: 100%;
+  z-index: 1 !important;
+}
+
+.bangladesh-map-wrapper {
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  min-height: 500px;
+  max-height: 700px;
+  height: 600px;
+}
+
+.bangladesh-map-legend {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+}
+
+.bangladesh-map-legend-label {
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.bangladesh-map-legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bangladesh-map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+}
+
+.bangladesh-map-legend-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+}
+
+/* Leaflet overrides - using global styles */

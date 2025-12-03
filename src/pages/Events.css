@@ -1,0 +1,255 @@
+/* Header Section */
+.events-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .events-header {
+    margin-bottom: 2.5rem;
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .events-header {
+    margin-bottom: 3rem;
+  }
+}
+
+.events-header-content {
+  margin-bottom: 1.5rem;
+}
+
+.events-header-label {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.5 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.events-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  margin-top: 0 !important;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .events-header-title {
+    font-size: 2.5rem;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .events-header-title {
+    font-size: 3rem;
+  }
+}
+
+.events-header-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-bg-active);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .events-header-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .events-header-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.events-header-description {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .events-header-description {
+    font-size: 1.125rem;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.events-filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .events-filters-wrapper {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+/* Events Grid */
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .events-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Event Card Skeleton */
+.event-card-skeleton {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  min-height: 18rem;
+}
+
+.event-card-skeleton-image {
+  width: 100%;
+  height: 12rem;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.event-card-skeleton-content {
+  padding: 1rem;
+}
+
+.event-card-skeleton-title {
+  width: 80%;
+  height: 1.5rem;
+  background: var(--color-bg-primary);
+  border-radius: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.event-card-skeleton-meta {
+  width: 60%;
+  height: 1rem;
+  background: var(--color-bg-primary);
+  border-radius: 0.25rem;
+}
+
+/* Empty State */
+.events-empty-card {
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  border-radius: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .events-empty-card {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .events-empty-card {
+    padding: 3rem;
+  }
+}
+
+.events-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.events-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 640px) {
+  .events-empty-icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1.25rem;
+  }
+}
+
+.events-empty-icon-svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-bg-active);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .events-empty-icon-svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.events-empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+@media (min-width: 640px) {
+  .events-empty-title {
+    font-size: 1.5rem;
+  }
+}
+
+.events-empty-description {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+}
+
+@media (min-width: 640px) {
+  .events-empty-description {
+    font-size: 1rem;
+  }
+}
+

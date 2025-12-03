@@ -1,0 +1,312 @@
+/* Game Card Wrapper with Glow */
+.game-card-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.game-card-glow {
+  position: absolute !important;
+  inset: 0 !important;
+  background: var(--color-bg-active) !important;
+  opacity: 0.1 !important;
+  border-radius: 1.5rem !important;
+  filter: blur(1.5rem) !important;
+  transition: filter 0.3s ease !important;
+  z-index: 0 !important;
+}
+
+.game-card-wrapper:hover .game-card-glow {
+  filter: blur(2rem) !important;
+}
+
+/* Game Card */
+.game-card {
+  position: relative !important;
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 1.5rem !important;
+  padding: 1.25rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  height: 100% !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+@media (min-width: 640px) {
+  .game-card {
+    padding: 1.5rem !important;
+  }
+}
+
+.game-card-wrapper:hover .game-card {
+  border-color: color-mix(in srgb, var(--color-bg-active) 50%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.game-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+  height: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Header with Players */
+.game-card-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.game-card-icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  color: var(--color-bg-active) !important;
+  opacity: 0.7 !important;
+  flex-shrink: 0 !important;
+  margin-top: 0.125rem !important;
+}
+
+.game-card-players {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.game-card-player-names {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important;
+  flex-wrap: nowrap !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+}
+
+.game-card-player-name {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.7 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+  flex-shrink: 1 !important;
+}
+
+.game-card-player-name-active {
+  opacity: 1 !important;
+  color: var(--color-text-primary) !important;
+}
+
+.game-card-vs {
+  color: var(--color-bg-active) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  flex-shrink: 0 !important;
+}
+
+.game-card-event-link {
+  font-size: 0.75rem !important;
+  color: var(--color-bg-active) !important;
+  text-decoration: none !important;
+  margin-top: 0.25rem !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.game-card-event-link:hover {
+  opacity: 0.8 !important;
+}
+
+.game-card-event-name {
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.7 !important;
+  margin-top: 0.25rem !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Result Badge */
+.game-card-result {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.game-card-result-win {
+  background-color: var(--color-8) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-0) !important;
+}
+
+.game-card-result-draw {
+  background-color: var(--color-4) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-0) !important;
+}
+
+.game-card-result-loss {
+  background-color: var(--color-6) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-0) !important;
+}
+
+.game-card-result-score {
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+
+.game-card-result-label {
+  font-size: 0.75rem !important;
+  opacity: 0.8 !important;
+}
+
+/* Meta Section */
+.game-card-meta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.7 !important;
+}
+
+.game-card-date {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important;
+}
+
+.game-card-meta-icon {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  color: var(--color-bg-active) !important;
+  flex-shrink: 0 !important;
+}
+
+.game-card-source-badge {
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0.25rem !important;
+  background: var(--color-3) !important;
+  color: var(--color-text-primary) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+/* Actions Section */
+.game-card-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding-top: 0.5rem !important;
+  border-top: 1px solid var(--color-border) !important;
+  margin-top: auto !important;
+}
+
+.game-card-action-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.375rem !important;
+  padding: 0.375rem 0.5rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  flex: 1 !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--color-bg-active) !important;
+  cursor: pointer !important;
+}
+
+.game-card-action-btn-primary {
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+  box-shadow: 0 3px 5px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active) !important;
+}
+
+.game-card-action-btn-primary:hover {
+  opacity: 0.8 !important;
+  transform: translateY(-2px) !important;
+}
+
+.game-card-action-btn-secondary {
+  border: 1px solid var(--color-10) !important;
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.game-card-action-btn-secondary:hover {
+  color: var(--color-0) !important;
+  background: var(--color-6) !important;
+  border-color: var(--color-bg-active) !important;
+}
+
+.game-card-action-icon {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  flex-shrink: 0 !important;
+}
+
+/* Skeleton Styles */
+.game-card-skeleton-header {
+  height: 2.5rem !important;
+  width: 100% !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+.game-card-skeleton-result {
+  height: 2.5rem !important;
+  width: 100% !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+.game-card-skeleton-meta {
+  height: 1.25rem !important;
+  width: 60% !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.25rem !important;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

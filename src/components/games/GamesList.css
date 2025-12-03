@@ -1,0 +1,121 @@
+/* Games List */
+.event-detail-games-skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .event-detail-games-skeleton-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.event-detail-games-skeleton-item {
+  height: 12rem;
+  width: 100%;
+}
+
+/* Games Empty State */
+.event-detail-games-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-empty {
+    padding: 3rem 2rem;
+    gap: 1.5rem;
+  }
+}
+
+.event-detail-games-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: var(--color-3);
+  border: 1px solid var(--color-10);
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-empty-icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1.25rem;
+  }
+}
+
+.event-detail-games-empty-icon-svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-7);
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-empty-icon-svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.event-detail-games-empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-10);
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-empty-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.event-detail-games-empty-description {
+  font-size: 0.875rem;
+  color: var(--color-10);
+  opacity: 0.7;
+  max-width: 28rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-empty-description {
+    font-size: 1rem;
+  }
+}
+
+/* Games Grid */
+.event-detail-games-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .event-detail-games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .event-detail-games-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+

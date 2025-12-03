@@ -1,0 +1,215 @@
+:root {
+  font-family: 'Outfit', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  
+  /* Color scale variables - will be set by ThemeSwitcher */
+  --color-0: var(--color-0);
+  --color-1: var(--color-1);
+  --color-2: var(--color-2);
+  --color-3: var(--color-3);
+  --color-4: var(--color-4);
+  --color-5: var(--color-5);
+  --color-6: var(--color-6);
+  --color-7: var(--color-7);
+  --color-8: var(--color-8);
+  --color-9: var(--color-9);
+  --color-10: var(--color-10);
+  --color-danger: var(--color-danger);
+  --color-danger-hover: var(--color-danger-hover);
+  
+  /* Semantic color mappings */
+  --color-bg-primary: var(--color-1);
+  --color-bg-secondary: var(--color-2);
+  --color-bg-active: var(--color-7);
+  --color-text-primary: var(--color-10);
+  --color-text-light: var(--color-0);
+  --color-border: var(--color-2);
+  --color-border-dark: var(--color-10);
+  --color-icon-border: var(--color-10);
+
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-bg-active);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-border-dark);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  display: block;
+}
+
+#root {
+  display: block;
+  width: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-bg-secondary);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+button:hover {
+  background-color: var(--color-bg-active);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Leaflet Map Styles */
+.leaflet-container {
+  background: var(--color-bg-secondary) !important;
+  font-family: inherit !important;
+  z-index: 1 !important;
+  position: relative !important;
+}
+
+.leaflet-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-map-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-tile-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-overlay-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-shadow-pane {
+  z-index: 3 !important;
+}
+
+.leaflet-marker-pane {
+  z-index: 4 !important;
+}
+
+.leaflet-tooltip-pane {
+  z-index: 5 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 6 !important;
+}
+
+.leaflet-control {
+  z-index: 7 !important;
+}
+
+.leaflet-tooltip {
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  padding: 0 !important;
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--color-border) !important;
+}
+
+.bangladesh-map-tooltip {
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  padding: 0 !important;
+}
+
+.bangladesh-map-tooltip.leaflet-tooltip-top:before {
+  border-top-color: var(--color-border) !important;
+}
+
+.bangladesh-map-tooltip-content {
+  text-align: center;
+  padding: 6px 8px;
+}
+
+.bangladesh-map-tooltip-title {
+  display: block;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.bangladesh-map-tooltip-count {
+  display: block;
+  color: var(--color-bg-active);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.bangladesh-map-tooltip-empty {
+  display: block;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+  font-size: 11px;
+}
+
+.bangladesh-map-tooltip-rating {
+  display: block;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid var(--color-10) !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden !important;
+}
+
+.leaflet-control-zoom a {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-text-primary) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-light) !important;
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+.district-label {
+  background: transparent !important;
+  border: none !important;
+}

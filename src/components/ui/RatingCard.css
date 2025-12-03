@@ -1,0 +1,190 @@
+/* Rating Card Component */
+.rating-card {
+  position: relative !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 1rem !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: hidden !important;
+}
+
+.rating-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  border-color: var(--color-border-dark) !important;
+}
+
+.rating-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  z-index: 0 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.rating-card:hover::before {
+  opacity: 0.4 !important;
+}
+
+.rating-card-glow {
+  position: absolute !important;
+  inset: 0 !important;
+  background: var(--color-bg-active) !important;
+  opacity: 0.1 !important;
+  border-radius: 1rem !important;
+  filter: blur(1.5rem) !important;
+  transition: filter 0.3s ease !important;
+  z-index: 0 !important;
+}
+
+.rating-card:hover .rating-card-glow {
+  filter: blur(2rem) !important;
+  opacity: 0.15 !important;
+}
+
+.rating-card-content {
+  position: relative !important;
+  z-index: 1 !important;
+  padding: 1.25rem !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@media (min-width: 640px) {
+  .rating-card-content {
+    padding: 1.5rem !important;
+  }
+}
+
+.rating-card-label {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.8 !important;
+  margin: 0 0 0.5rem 0 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.rating-card-value {
+  font-size: 2rem !important;
+  font-weight: 900 !important;
+  color: var(--color-bg-active) !important;
+  margin: 0 0 0.75rem 0 !important;
+}
+
+@media (min-width: 640px) {
+  .rating-card-value {
+    font-size: 2.25rem !important;
+  }
+}
+
+.rating-card-stats {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+  flex-grow: 1 !important;
+}
+
+.rating-card-stat-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: 0.75rem !important;
+}
+
+.rating-card-stat-row-border {
+  padding-top: 0.25rem !important;
+  border-top: 1px solid var(--color-border) !important;
+}
+
+.rating-card-stat-label {
+  color: var(--color-text-primary) !important;
+  opacity: 0.7 !important;
+}
+
+.rating-card-stat-wins {
+  color: var(--color-bg-active) !important;
+}
+
+.rating-card-stat-draws {
+  color: var(--color-warning) !important;
+}
+
+.rating-card-stat-losses {
+  color: var(--color-danger) !important;
+}
+
+.rating-card-stat-value {
+  color: var(--color-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.rating-card-stat-winrate {
+  color: var(--color-bg-active) !important;
+}
+
+.rating-card-highest {
+  font-size: 0.75rem !important;
+  color: var(--color-text-primary) !important;
+  opacity: 0.6 !important;
+  margin: 0 !important;
+}
+
+/* Skeleton Styles */
+.rating-card-skeleton-label {
+  height: 0.875rem !important;
+  width: 4rem !important;
+  margin: 0 0 0.5rem 0 !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.25rem !important;
+  animation: stat-card-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+.rating-card-skeleton-value {
+  height: 2rem !important;
+  width: 5rem !important;
+  margin: 0 0 0.75rem 0 !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.5rem !important;
+  animation: stat-card-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@media (min-width: 640px) {
+  .rating-card-skeleton-value {
+    height: 2.25rem !important;
+    width: 6rem !important;
+  }
+}
+
+.rating-card-skeleton-stats {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+  flex-grow: 1 !important;
+}
+
+.rating-card-skeleton-stat {
+  height: 0.75rem !important;
+  width: 100% !important;
+  background-color: var(--color-bg-secondary) !important;
+  opacity: 0.3 !important;
+  border-radius: 0.25rem !important;
+  animation: stat-card-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes stat-card-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+

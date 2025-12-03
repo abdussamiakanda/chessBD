@@ -1,0 +1,610 @@
+/* District Detail Page */
+.district-detail-page {
+  text-align: left !important;
+}
+
+/* Back Button */
+.district-detail-back-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  color: var(--color-bg-active) !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  margin-bottom: 1rem !important;
+  transition: all 0.3s ease !important;
+  text-align: left !important;
+}
+
+@media (min-width: 640px) {
+  .district-detail-back-button {
+    font-size: 1rem !important;
+    gap: 0.75rem !important;
+  }
+}
+
+.district-detail-back-button:hover {
+  opacity: 0.8 !important;
+  gap: 1rem !important;
+}
+
+.district-detail-back-button-icon {
+  width: 1rem !important;
+  height: 1rem !important;
+  flex-shrink: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .district-detail-back-button-icon {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+}
+
+/* Hero Section */
+.district-detail-hero {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .district-detail-hero {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-hero {
+    margin-bottom: 3rem;
+  }
+}
+
+.district-detail-hero-content {
+  margin-bottom: 1.5rem;
+}
+
+.district-detail-hero-label {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.5 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.district-detail-hero-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.district-detail-hero-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-bg-active);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .district-detail-hero-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.district-detail-hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .district-detail-hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-hero-title {
+    font-size: 3rem;
+  }
+}
+
+.district-detail-hero-description {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .district-detail-hero-description {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-hero-description {
+    font-size: 1.125rem;
+  }
+}
+
+/* Map Section */
+.district-detail-map-section {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-map-section {
+    margin-bottom: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-map-section {
+    margin-bottom: 4rem;
+  }
+}
+
+.district-detail-map-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  z-index: 1;
+  background: var(--color-bg-secondary);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .district-detail-map-card {
+    padding: 1.5rem;
+    min-height: 600px;
+  }
+}
+
+/* Statistics Grid */
+.district-detail-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1rem !important;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-stats-grid {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .district-detail-stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* Section */
+.district-detail-section {
+  margin: 3rem 0;
+}
+
+@media (min-width: 640px) {
+  .district-detail-section {
+    margin: 3.5rem 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-section {
+    margin: 4rem 0;
+  }
+}
+
+.district-detail-content-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-content-header {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.district-detail-content-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-bg-active);
+  flex-shrink: 0;
+}
+
+.district-detail-content-title {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .district-detail-content-title {
+    font-size: 1rem;
+  }
+}
+
+/* Players Grid */
+.district-detail-players-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-players-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.district-detail-player-card {
+  position: relative !important;
+  padding: 1rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+@media (min-width: 640px) {
+  .district-detail-player-card {
+    padding: 1.25rem !important;
+  }
+}
+
+.district-detail-player-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--color-3) !important;
+  background-color: var(--color-2) !important;
+}
+
+.district-detail-player-card-rank-1 {
+  background-color: var(--color-3) !important;
+  border-color: var(--color-4) !important;
+}
+
+.district-detail-player-card-rank-1:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--color-5) !important;
+  background-color: var(--color-4) !important;
+}
+
+.district-detail-player-card-rank-2 {
+  background-color: var(--color-2) !important;
+  border-color: var(--color-3) !important;
+}
+
+.district-detail-player-card-rank-2:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--color-4) !important;
+  background-color: var(--color-3) !important;
+}
+
+.district-detail-player-card-rank-3 {
+  background-color: var(--color-1) !important;
+  border-color: var(--color-2) !important;
+}
+
+.district-detail-player-card-rank-3:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--color-3) !important;
+  background-color: var(--color-2) !important;
+}
+
+.district-detail-player-link {
+  text-decoration: none !important;
+  color: inherit !important;
+  display: block !important;
+}
+
+.district-detail-player-content {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-player-content {
+    gap: 1rem;
+  }
+}
+
+.district-detail-rank-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s;
+}
+
+@media (min-width: 640px) {
+  .district-detail-rank-badge {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+.district-detail-rank-icon-crown {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 640px) {
+  .district-detail-rank-icon-crown {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.district-detail-rank-icon-medal {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-text-primary);
+  opacity: 0.8;
+}
+
+@media (min-width: 640px) {
+  .district-detail-rank-icon-medal {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.district-detail-rank-icon-medal-bronze {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-bg-active);
+}
+
+@media (min-width: 640px) {
+  .district-detail-rank-icon-medal-bronze {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.district-detail-rank-number {
+  font-weight: 700;
+}
+
+.district-detail-player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.district-detail-player-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.25rem 0;
+  transition: color 0.3s;
+}
+
+@media (min-width: 640px) {
+  .district-detail-player-name {
+    font-size: 1rem;
+  }
+}
+
+.district-detail-player-link:hover .district-detail-player-name {
+  color: var(--color-bg-active);
+}
+
+.district-detail-player-username {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .district-detail-player-username {
+    font-size: 0.875rem;
+  }
+}
+
+.district-detail-player-rating {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.district-detail-player-rating-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .district-detail-player-rating-value {
+    font-size: 1.5rem;
+  }
+}
+
+.district-detail-player-rating-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  opacity: 0.6;
+  margin: 0;
+}
+
+/* Clubs List */
+.district-detail-clubs-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-clubs-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .district-detail-clubs-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.district-detail-club-card-skeleton {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.district-detail-club-skeleton {
+  width: 100%;
+  height: 100%;
+}
+
+.district-detail-player-card-skeleton {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  min-height: 120px;
+}
+
+.district-detail-player-skeleton {
+  width: 100%;
+  height: 100%;
+}
+
+/* Empty State */
+.district-detail-empty-card {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-empty-card {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .district-detail-empty-card {
+    padding: 3rem;
+  }
+}
+
+.district-detail-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-empty-content {
+    gap: 1.25rem;
+  }
+}
+
+.district-detail-empty-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-bg-active);
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .district-detail-empty-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.district-detail-empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .district-detail-empty-title {
+    font-size: 1.5rem;
+  }
+}
+
+.district-detail-empty-description {
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .district-detail-empty-description {
+    font-size: 1rem;
+  }
+}
+
+.district-detail-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.district-detail-back-link:hover {
+  opacity: 0.9;
+}
+
+.district-detail-back-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+
