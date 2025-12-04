@@ -98,8 +98,121 @@ function fallbackHeuristicMove(board, blunderLevel) {
 }
 
 /**
+ * Calculate blunder probability based on Elo rating
+ * Lower Elo = more blunders, higher Elo = fewer blunders
+ * Elo range: 1350-2850, maps to blunder probability 0.4-0.05
+ */
+function calculateBlunderProbabilityFromElo(elo) {
+  // Normalize Elo to 0-1 range (1350-2850)
+  const normalizedElo = (elo - 1350) / (2850 - 1350)
+  // Lower Elo = higher blunder probability
+  // 1350 Elo = 0.4 (40% blunder chance)
+  // 2850 Elo = 0.05 (5% blunder chance)
+  const baseBlunderProb = 0.4 - (normalizedElo * 0.35)
+  return Math.max(0.05, Math.min(0.4, baseBlunderProb))
+}
+
+/**
+ * Calculate blunder probability based on position characteristics and Elo
+ * Elo determines base probability, position determines adjustments
+ */
+function calculateBlunderProbability(candidates, moveCount, gamePhase, elo) {
+  if (candidates.length < 2) {
+    return 0 // No blunder if only one candidate
+  }
+
+  // Start with Elo-based blunder probability
+  let blunderProb = calculateBlunderProbabilityFromElo(elo)
+
+  // Factor 1: Evaluation gap between best and second best
+  // Smaller gap = easier to "accidentally" pick wrong move
+  const bestScore = candidates[0].score
+  const secondBestScore = candidates[1].score
+  const scoreGap = Math.abs(bestScore - secondBestScore)
+  
+  // If moves are very close (within 50 centipawns), increase blunder chance
+  // Lower Elo bots are more affected by this
+  const eloFactor = (2850 - elo) / 1500 // 0-1, higher for lower Elo
+  if (scoreGap < 50) {
+    blunderProb *= (1.0 + 0.8 * eloFactor) // Lower Elo = more affected
+  } else if (scoreGap < 100) {
+    blunderProb *= (1.0 + 0.4 * eloFactor)
+  } else if (scoreGap < 200) {
+    blunderProb *= (1.0 + 0.2 * eloFactor)
+  }
+
+  // Factor 2: Number of candidate moves (more choices = harder decision)
+  // Lower Elo bots struggle more with many options
+  if (candidates.length >= 5) {
+    blunderProb *= (1.0 + 0.3 * eloFactor)
+  } else if (candidates.length >= 4) {
+    blunderProb *= (1.0 + 0.15 * eloFactor)
+  }
+
+  // Factor 3: Game phase (more blunders in opening/middlegame, fewer in endgame)
+  if (gamePhase === 'opening') {
+    blunderProb *= (1.0 + 0.2 * eloFactor)
+  } else if (gamePhase === 'endgame') {
+    blunderProb *= (1.0 - 0.3 * eloFactor) // Fewer blunders in endgame, especially for higher Elo
+  }
+
+  // Factor 4: Position complexity (more pieces = more complexity)
+  // Lower Elo bots struggle more in complex positions
+  if (moveCount > 30) {
+    blunderProb *= (1.0 + 0.15 * eloFactor)
+  } else if (moveCount < 10) {
+    blunderProb *= (1.0 - 0.1 * eloFactor)
+  }
+
+  // Cap the probability
+  return Math.min(0.95, Math.max(0.05, blunderProb))
+}
+
+/**
+ * Determine blunder severity based on Elo
+ * Lower Elo = worse blunders (picks worse moves)
+ */
+function getBlunderSeverity(elo, candidates) {
+  const normalizedElo = (elo - 1350) / (2850 - 1350) // 0-1
+  
+  // Lower Elo = more severe blunders
+  // 1350 Elo: might pick 3rd-5th best
+  // 2000 Elo: might pick 2nd-3rd best
+  // 2850 Elo: only picks 2nd best occasionally
+  
+  if (normalizedElo < 0.3) {
+    // Very low Elo (1350-1800): can pick from top 5
+    return Math.min(5, candidates.length)
+  } else if (normalizedElo < 0.6) {
+    // Medium Elo (1800-2300): picks from top 3
+    return Math.min(3, candidates.length)
+  } else {
+    // High Elo (2300-2850): only picks 2nd best
+    return Math.min(2, candidates.length)
+  }
+}
+
+/**
+ * Determine game phase based on move count and material
+ */
+function getGamePhase(board) {
+  const moveCount = board.history().length
+  const material = board.fen().split(' ')[0]
+  const queens = (material.match(/q/g) || []).length
+  const rooks = (material.match(/r/g) || []).length
+  
+  if (moveCount < 15) {
+    return 'opening'
+  } else if (queens === 0 || (queens <= 1 && rooks <= 2)) {
+    return 'endgame'
+  } else {
+    return 'middlegame'
+  }
+}
+
+/**
  * Choose move with personality using Stockfish engine
- * Similar to choose_move_with_personality in bots.py
+ * Uses Elo-based strength limiting + intelligent blunder detection
  */
 export async function chooseMoveWithPersonality(board, personality, engine) {
   const legalMoves = board.moves({ verbose: true })
@@ -107,22 +220,37 @@ export async function chooseMoveWithPersonality(board, personality, engine) {
     return null
   }
 
-  const blunderLevel = parseFloat(personality.blunder_level || 0.3)
+  const elo = parseInt(personality.elo || 2000)
   const depth = parseInt(personality.depth || 0)
   const maxMs = parseInt(personality.max_ms || 350)
 
   // If no engine provided, use fallback
   if (!engine || !engine.getIsReady()) {
-    const fallbackMove = fallbackHeuristicMove(board, blunderLevel)
+    // Use a simple fallback - pick a reasonable move
+    // Convert Elo to blunder rate for fallback (lower Elo = higher blunder rate)
+    const fallbackBlunderRate = calculateBlunderProbabilityFromElo(elo)
+    const fallbackMove = fallbackHeuristicMove(board, fallbackBlunderRate)
     return fallbackMove ? `${fallbackMove.from}${fallbackMove.to}${fallbackMove.promotion || ''}` : null
   }
 
   try {
     const fen = board.fen()
     
+    // Configure engine strength based on Elo
+    if (engine.setStrength) {
+      try {
+        // Clamp Elo to Stockfish's supported range (1350-2850)
+        const clampedElo = Math.max(1350, Math.min(2850, elo))
+        await engine.setStrength(true, clampedElo)
+      } catch (e) {
+        // If setting strength fails, continue without limiting
+        console.warn('Failed to set engine strength:', e)
+      }
+    }
+    
     // Set multipv to get multiple candidate moves
-    // Use more candidates for higher blunder levels (more variety)
-    const multipvCount = blunderLevel > 0.3 ? 5 : blunderLevel > 0.2 ? 4 : 3
+    // Lower Elo = more candidates needed (they might pick worse moves)
+    const multipvCount = elo < 1800 ? 5 : elo < 2200 ? 4 : 3
     if (engine.setMultiPv) {
       try {
         await engine.setMultiPv(multipvCount)
@@ -180,83 +308,63 @@ export async function chooseMoveWithPersonality(board, personality, engine) {
 
     // If still no candidates, use fallback
     if (candidates.length === 0) {
-      const fallbackMove = fallbackHeuristicMove(board, blunderLevel)
+      const fallbackBlunderRate = calculateBlunderProbabilityFromElo(elo)
+      const fallbackMove = fallbackHeuristicMove(board, fallbackBlunderRate)
       return fallbackMove ? `${fallbackMove.from}${fallbackMove.to}${fallbackMove.promotion || ''}` : null
     }
 
     // Sort candidates by score (best first)
     candidates.sort((a, b) => b.score - a.score)
     
-    // Decide which candidate to play based on blunder_level
-    // blunder_level is the probability of NOT playing the best move
-    const r = Math.random()
+    // Calculate blunder probability based on Elo and position
+    const gamePhase = getGamePhase(board)
+    const blunderProbability = calculateBlunderProbability(
+      candidates,
+      legalMoves.length,
+      gamePhase,
+      elo
+    )
     
-    // If we should play best move (most of the time for low blunder levels)
-    if (r > blunderLevel || candidates.length === 1) {
-      // For very strong bots (blunder_level < 0.1), always play best
-      if (blunderLevel < 0.1) {
-        return candidates[0].uci
-      }
-      
-      // For strong bots (blunder_level < 0.2), occasionally play 2nd best for variety
-      if (blunderLevel < 0.2 && candidates.length > 1 && Math.random() < 0.05) {
-        return candidates[1].uci
-      }
-      
-      // For medium bots, small chance to play 2nd best
-      if (candidates.length > 1 && Math.random() < 0.08) {
-        return candidates[1].uci
-      }
-      
-      return candidates[0].uci
-    } else {
-      // Within "blunder zone" - we're going to play a suboptimal move
-      const r2 = Math.random()
-      
-      if (r2 < 0.5 && candidates.length > 1) {
-        // 50% chance: Play from top 3 candidates (mild blunder)
-        const topCandidates = candidates.slice(0, Math.min(3, candidates.length))
-        // Prefer 2nd and 3rd best, but sometimes include best for variety
-        const weakerCandidates = topCandidates.slice(1)
-        if (weakerCandidates.length > 0) {
-          return weakerCandidates[Math.floor(Math.random() * weakerCandidates.length)].uci
-        }
-        return topCandidates[Math.floor(Math.random() * topCandidates.length)].uci
-      } else if (r2 < 0.75) {
-        // 25% chance: Use fallback heuristic (moderate blunder)
-        // Use a scaled blunder level for the fallback
-        const fallbackBlunderLevel = Math.min(0.3, blunderLevel * 1.5)
-        const fallbackMove = fallbackHeuristicMove(board, fallbackBlunderLevel)
-        if (fallbackMove) {
-          return `${fallbackMove.from}${fallbackMove.to}${fallbackMove.promotion || ''}`
-        }
-        // If fallback fails, use random move
-        const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-        return `${randomMove.from}${randomMove.to}${randomMove.promotion || ''}`
-      } else {
-        // 25% chance: Big blunder - random legal move
-        // For very high blunder levels, make this more likely
-        if (blunderLevel > 0.3 && Math.random() < 0.5) {
-          // Extra random move for high blunder bots
-          const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-          return `${randomMove.from}${randomMove.to}${randomMove.promotion || ''}`
-        }
-        // Otherwise, use fallback heuristic
-        const fallbackMove = fallbackHeuristicMove(board, Math.min(0.5, blunderLevel * 2))
-        if (fallbackMove) {
-          return `${fallbackMove.from}${fallbackMove.to}${fallbackMove.promotion || ''}`
-        }
-        // Last resort: random move
-        const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-        return `${randomMove.from}${randomMove.to}${randomMove.promotion || ''}`
-      }
+    // Use a deterministic seed based on position + Elo to make it consistent
+    // Same position + same Elo = same decision
+    const positionHash = fen.split(' ').slice(0, 4).join('').replace(/[^a-zA-Z0-9]/g, '')
+    let seed = elo // Start with Elo
+    for (let i = 0; i < positionHash.length; i++) {
+      seed = ((seed << 5) - seed) + positionHash.charCodeAt(i)
+      seed = seed & seed // Convert to 32bit integer
     }
+    // Use seed to create a deterministic value between 0 and 1
+    const deterministicValue = Math.abs(Math.sin(seed)) % 1
     
-    // Fallback (should never reach here, but just in case)
-    return candidates[0]?.uci || legalMoves[0] ? `${legalMoves[0].from}${legalMoves[0].to}${legalMoves[0].promotion || ''}` : null
+    // Decide whether to blunder based on Elo-determined probability
+    if (deterministicValue < blunderProbability && candidates.length > 1) {
+      // We're going to blunder - severity determined by Elo
+      const blunderSeverity = getBlunderSeverity(elo, candidates)
+      
+      // Lower Elo = picks from worse moves
+      // Get evaluation gap to determine how bad the blunder should be
+      const bestScore = candidates[0].score
+      const worstCandidateScore = candidates[Math.min(blunderSeverity - 1, candidates.length - 1)].score
+      const scoreRange = bestScore - worstCandidateScore
+      
+      // Pick a move from the blunder range based on Elo
+      // Lower Elo = more likely to pick worse moves
+      const normalizedElo = (elo - 1350) / (2850 - 1350) // 0-1
+      const blunderIndex = Math.floor(
+        (1 - normalizedElo) * (blunderSeverity - 1) + 1
+      )
+      
+      // Ensure we don't pick the best move
+      const selectedIndex = Math.min(blunderIndex, candidates.length - 1)
+      return candidates[selectedIndex].uci
+    } else {
+      // Play normally - choose best move
+      return candidates[0].uci
+    }
   } catch (error) {
     // On any engine problem, fall back to simple heuristic
-    const fallbackMove = fallbackHeuristicMove(board, blunderLevel)
+    const fallbackBlunderRate = calculateBlunderProbabilityFromElo(elo)
+    const fallbackMove = fallbackHeuristicMove(board, fallbackBlunderRate)
     return fallbackMove ? `${fallbackMove.from}${fallbackMove.to}${fallbackMove.promotion || ''}` : null
   }
 }

@@ -442,6 +442,13 @@
   }
 }
 
+.bots-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .bots-strength {
   display: inline-flex;
   align-items: center;
@@ -460,6 +467,27 @@
 }
 
 .bots-card:hover .bots-strength {
+  opacity: 1;
+  background: color-mix(in srgb, var(--color-bg-active) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-bg-active) 25%, transparent);
+}
+
+.bots-elo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  opacity: 0.7;
+  margin: 0;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--color-bg-active) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-bg-active) 15%, transparent);
+  transition: all 0.3s ease;
+}
+
+.bots-card:hover .bots-elo {
   opacity: 1;
   background: color-mix(in srgb, var(--color-bg-active) 12%, transparent);
   border-color: color-mix(in srgb, var(--color-bg-active) 25%, transparent);

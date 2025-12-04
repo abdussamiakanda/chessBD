@@ -12,6 +12,8 @@ export class UciEngine {
     this.workerQueue = []
     this.isReady = false
     this.multiPv = 3
+    this.limitStrength = false
+    this.elo = null
   }
 
   static async create(engineName, enginePath, customEngineInit) {
@@ -65,6 +67,29 @@ export class UciEngine {
     )
 
     this.multiPv = multiPv
+  }
+
+  async setStrength(limitStrength, elo) {
+    if (limitStrength === this.limitStrength && elo === this.elo) return
+
+    // Stockfish's UCI_Elo range is 1350-2850
+    if (limitStrength && (elo < 1350 || elo > 2850)) {
+      throw new Error(`Invalid Elo value: ${elo}. Must be between 1350 and 2850`)
+    }
+
+    const commands = []
+    if (limitStrength) {
+      commands.push(`setoption name UCI_LimitStrength value true`)
+      commands.push(`setoption name UCI_Elo value ${elo}`)
+    } else {
+      commands.push(`setoption name UCI_LimitStrength value false`)
+    }
+    commands.push("isready")
+
+    await this.sendCommandsToEachWorker(commands, "readyok")
+
+    this.limitStrength = limitStrength
+    this.elo = elo
   }
 
   getIsReady() {
@@ -145,11 +170,20 @@ export class UciEngine {
     const worker = getEngineWorker(this.enginePath)
 
     await sendCommandsToWorker(worker, ["uci"], "uciok")
-    await sendCommandsToWorker(
-      worker,
-      [`setoption name MultiPV value ${this.multiPv}`, "isready"],
-      "readyok"
-    )
+    
+    const initCommands = [`setoption name MultiPV value ${this.multiPv}`]
+    
+    // Set strength options if configured
+    if (this.limitStrength && this.elo !== null) {
+      initCommands.push(`setoption name UCI_LimitStrength value true`)
+      initCommands.push(`setoption name UCI_Elo value ${this.elo}`)
+    } else {
+      initCommands.push(`setoption name UCI_LimitStrength value false`)
+    }
+    
+    initCommands.push("isready")
+    
+    await sendCommandsToWorker(worker, initCommands, "readyok")
     await this.customEngineInit?.(worker)
     await sendCommandsToWorker(worker, ["ucinewgame", "isready"], "readyok")
 

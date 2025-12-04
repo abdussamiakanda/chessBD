@@ -67,7 +67,12 @@ export function Bots() {
                           </div>
                           <div className="bots-info">
                             <h3 className="bots-name">{t(`bots.${bot.id}.name`) || bot.name}</h3>
-                            <span className="bots-strength">{t(`bots.${bot.id}.strength`) || bot.strength}</span>
+                            <div className="bots-meta">
+                              <span className="bots-strength">{t(`bots.${bot.id}.strength`) || bot.strength}</span>
+                              {bot.elo && (
+                                <span className="bots-elo">Elo: {bot.elo}</span>
+                              )}
+                            </div>
                           </div>
                         </div>
                         

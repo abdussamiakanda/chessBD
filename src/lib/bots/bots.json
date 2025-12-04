@@ -7,7 +7,8 @@
     "icon": "hasina.svg",
     "link": "/bots/hasuapa",
     "active": false,
-    "blunder_level": 0.18,
+    "elo": 2200,
+    "blunder_rate": 0.12,
     "depth": 12,
     "max_ms": 400
   },
@@ -19,7 +20,8 @@
     "icon": "rickshawwalamama.svg",
     "link": "/bots/rickshawwalamama",
     "active": true,
-    "blunder_level": 0.22,
+    "elo": 2000,
+    "blunder_rate": 0.18,
     "depth": 11,
     "max_ms": 350
   },
@@ -31,7 +33,8 @@
     "icon": "padmabridge.svg",
     "link": "/bots/padmabridge",
     "active": true,
-    "blunder_level": 0.08,
+    "elo": 2500,
+    "blunder_rate": 0.08,
     "depth": 14,
     "max_ms": 550
   },
@@ -43,7 +46,8 @@
     "icon": "murgichor.svg",
     "link": "/bots/murgichor",
     "active": true,
-    "blunder_level": 0.35,
+    "elo": 1500,
+    "blunder_rate": 0.30,
     "depth": 9,
     "max_ms": 300
   },
@@ -55,7 +59,8 @@
     "icon": "jhalmuriwala.svg",
     "link": "/bots/jhalmuriwala",
     "active": true,
-    "blunder_level": 0.28,
+    "elo": 1600,
+    "blunder_rate": 0.25,
     "depth": 11,
     "max_ms": 350
   },
@@ -67,7 +72,8 @@
     "icon": "pocketmar.svg",
     "link": "/bots/pocketmar",
     "active": true,
-    "blunder_level": 0.25,
+    "elo": 1800,
+    "blunder_rate": 0.20,
     "depth": 10,
     "max_ms": 320
   }

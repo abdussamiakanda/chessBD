@@ -146,7 +146,8 @@ export function BotGame() {
       // Get bot message reacting to user's move
       const botColor = playAsBlack ? 'w' : 'b'
       const personality = {
-        blunder_level: bot?.blunder_level || 0.3,
+        elo: bot?.elo || 2000,
+        blunder_rate: bot?.blunder_rate || 0.15,
         depth: bot?.depth || 0,
         max_ms: bot?.max_ms || 350,
         welcome: [],
@@ -191,7 +192,8 @@ export function BotGame() {
 
       // Get personality settings from bot
       const personality = {
-        blunder_level: bot.blunder_level || 0.3,
+        elo: bot.elo || 2000,
+        blunder_rate: bot.blunder_rate || 0.15,
         depth: bot.depth || 0,
         max_ms: bot.max_ms || 350,
         // Placeholder messages for now
