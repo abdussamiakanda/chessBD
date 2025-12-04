@@ -47,6 +47,60 @@ export function ChessBoard({
   const [currentWhiteTime, setCurrentWhiteTime] = useState(whiteTime || 600)
   const [currentBlackTime, setCurrentBlackTime] = useState(blackTime || 600)
 
+  // Track current theme
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('chessbd-theme')
+      return saved && ['default', 'dark', 'light'].includes(saved) ? saved : 'default'
+    }
+    return 'default'
+  })
+
+  // Calculate board colors based on theme
+  const boardColors = useMemo(() => {
+    if (currentTheme === 'dark' || currentTheme === 'light') {
+      // Gray colors for dark and light themes
+      return {
+        dark: '#696969',
+        light: '#d1d1d1'
+      }
+    } else {
+      // Brown/beige colors for default theme
+      return {
+        dark: '#b58863',
+        light: '#f0d9b5'
+      }
+    }
+  }, [currentTheme])
+
+  // Listen for theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('chessbd-theme')
+        const newTheme = saved && ['default', 'dark', 'light'].includes(saved) ? saved : 'default'
+        if (newTheme !== currentTheme) {
+          setCurrentTheme(newTheme)
+        }
+      }
+    }
+
+    // Check theme on mount and periodically
+    checkTheme()
+    const interval = setInterval(checkTheme, 1000) // Check every second
+    
+    // Check immediately when window gains focus
+    window.addEventListener('focus', checkTheme)
+    
+    // Also listen for storage events (when theme changes in another tab)
+    window.addEventListener('storage', checkTheme)
+    
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('focus', checkTheme)
+      window.removeEventListener('storage', checkTheme)
+    }
+  }, [currentTheme])
 
   useEffect(() => {
     if (position) {
@@ -899,8 +953,8 @@ export function ChessBoard({
               width: '100%',
               height: '100%',
             },
-            darkSquareStyle: { backgroundColor: '#b58863' },
-            lightSquareStyle: { backgroundColor: '#f0d9b5' },
+            darkSquareStyle: { backgroundColor: boardColors.dark },
+            lightSquareStyle: { backgroundColor: boardColors.light },
             draggingPieceStyle: {
               opacity: 0.8,
               cursor: 'grabbing',
@@ -1123,8 +1177,8 @@ export function ChessBoard({
               width: '100%',
               height: '100%',
             },
-            darkSquareStyle: { backgroundColor: '#b58863' },
-            lightSquareStyle: { backgroundColor: '#f0d9b5' },
+            darkSquareStyle: { backgroundColor: boardColors.dark },
+            lightSquareStyle: { backgroundColor: boardColors.light },
             draggingPieceStyle: {
               opacity: 0.8,
               cursor: 'grabbing',
