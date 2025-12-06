@@ -10,7 +10,7 @@ import { getBotById } from '../lib/bots'
 import { useChessEngine } from '../hooks/useChessEngine'
 import { chooseMoveWithPersonality, pickMessage } from '../lib/bots/botMove'
 import { PawnIcon } from '../components/ui/ChessPieceIcons'
-import { Play, RefreshCw, Check } from 'lucide-react'
+import { Play, RefreshCw, Check, Brain } from 'lucide-react'
 import { PageLoader } from '../components/ui/PageLoader'
 import './Engine.css'
 
@@ -35,6 +35,7 @@ export function BotGame() {
   const [isBotThinking, setIsBotThinking] = useState(false)
   const [botMessage, setBotMessage] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
+  const [gameEnded, setGameEnded] = useState(false)
   const sectionRef = useRef(null)
   
   const pgn = location.state?.pgn
@@ -138,6 +139,12 @@ export function BotGame() {
 
       setIsWhiteTurn(gameCopy.turn() === 'w')
 
+      // Check if game ended after user's move
+      if (gameCopy.isGameOver() || gameCopy.isDraw()) {
+        setIsRunning(false)
+        setGameEnded(true)
+      }
+
       if (!gameStarted) {
         setGameStarted(true)
         setIsRunning(true)
@@ -240,6 +247,35 @@ export function BotGame() {
       setMoveHistoryUci([...moveHistoryUci, moveUci])
       setIsWhiteTurn(gameCopy.turn() === 'w')
       setGame(gameCopy)
+      
+      // Check if game ended after bot's move
+      if (gameCopy.isGameOver() || gameCopy.isDraw()) {
+        setIsRunning(false)
+        setGameEnded(true)
+        // Update bot message for game end
+        const botColorChar = botColor
+        const personality = {
+          elo: bot.elo || 2000,
+          blunder_rate: bot.blunder_rate || 0.15,
+          depth: bot.depth || 0,
+          max_ms: bot.max_ms || 350,
+          welcome: [],
+          midgame: ["Your move!", "Let's see what you got!", "Interesting..."],
+          game_over_win: ["GG! Well played!", "Good game!", "Thanks for playing!"],
+          game_over_loss: ["Nice game!", "Well played!", "Good fight!"],
+          game_over_draw: ["Draw! Good game!", "Stalemate!", "Interesting game!"],
+          game_over: ["Game over!", "Thanks for playing!", "GG!"],
+        }
+        pickMessage(gameCopy, personality, botColorChar, bot?.description || null).then((message) => {
+          if (message) {
+            setBotMessage(message)
+          }
+        })
+      }
+      if (gameCopy.isGameOver() || gameCopy.isDraw()) {
+        setIsRunning(false)
+        setGameEnded(true)
+      }
     } catch (error) {
       // Fallback: make a random move
       const gameCopy = new Chess(game.fen())
@@ -256,6 +292,12 @@ export function BotGame() {
           
           const moveUci = `${move.from}${move.to}${move.promotion || ''}`
           setMoveHistoryUci([...moveHistoryUci, moveUci])
+          
+          // Check if game ended after fallback move
+          if (gameCopy.isGameOver() || gameCopy.isDraw()) {
+            setIsRunning(false)
+            setGameEnded(true)
+          }
         }
       }
     } finally {
@@ -271,6 +313,7 @@ export function BotGame() {
 
     if (game.isGameOver()) {
       setIsRunning(false)
+      setGameEnded(true)
       return
     }
 
@@ -286,6 +329,16 @@ export function BotGame() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [game, gameStarted, bot, isBotThinking, playAsBlack, currentMoveIndex, moves.length, user])
+
+  // Check if game ended whenever game state changes
+  useEffect(() => {
+    if (game && gameStarted && !gameEnded) {
+      if (game.isGameOver() || game.isDraw() || game.isCheckmate() || game.isStalemate()) {
+        setIsRunning(false)
+        setGameEnded(true)
+      }
+    }
+  }, [game, gameStarted, gameEnded])
 
   const handleTimeUpdate = (color, newTime) => {
     setTimeout(() => {
@@ -363,6 +416,58 @@ export function BotGame() {
     setIsWhiteTurn(true)
     setGameStarted(false)
     setIsRunning(false)
+    setGameEnded(false)
+  }
+
+  const handleGameReview = () => {
+    if (moves.length === 0) return
+    
+    // Create a fresh game from starting position and replay all moves
+    const cleanGame = new Chess()
+    for (const move of moves) {
+      try {
+        if (move.from && move.to) {
+          cleanGame.move({ from: move.from, to: move.to, promotion: move.promotion })
+        } else if (move.san) {
+          cleanGame.move(move.san)
+        }
+      } catch (e) {
+        // Error replaying move
+      }
+    }
+    
+    // Determine result
+    let result = '*'
+    if (cleanGame.isCheckmate()) {
+      result = cleanGame.turn() === 'w' ? '0-1' : '1-0'
+    } else if (cleanGame.isDraw() || cleanGame.isStalemate()) {
+      result = '1/2-1/2'
+    }
+    
+    // Get player names
+    const whiteName = whitePlayer?.username || whitePlayer?.name || 'White'
+    const blackName = blackPlayer?.username || blackPlayer?.name || 'Black'
+    
+    // Generate PGN with proper headers
+    const today = new Date()
+    const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`
+    
+    cleanGame.header('Event', "Let's Play!")
+    cleanGame.header('Site', 'Chess.com')
+    cleanGame.header('Date', dateStr)
+    cleanGame.header('Round', '?')
+    cleanGame.header('White', whiteName)
+    cleanGame.header('Black', blackName)
+    cleanGame.header('Result', result)
+    
+    const pgn = cleanGame.pgn()
+    
+    if (!pgn || pgn.trim() === '') return
+    
+    // Store PGN in sessionStorage BEFORE opening new tab
+    sessionStorage.setItem('analysis-pgn', pgn)
+    // Open in new tab after setting sessionStorage
+    window.open('/analysis', '_blank')
   }
 
   const handlePlayAsBlack = () => {
@@ -539,6 +644,17 @@ export function BotGame() {
             {botMessage && (
               <div className="puzzle-feedback">
                 <span className="puzzle-feedback-success">{botMessage}</span>
+              </div>
+            )}
+            {gameEnded && (
+              <div className="engine-review-btn-wrapper">
+                <button
+                  className="engine-control-btn game-card-action-btn-primary"
+                  onClick={handleGameReview}
+                >
+                  <Brain size={16} />
+                  <span>Review</span>
+                </button>
               </div>
             )}
           </div>

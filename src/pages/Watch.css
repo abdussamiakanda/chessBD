@@ -285,6 +285,7 @@
 .watch-game-card {
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -455,7 +456,6 @@
 
 .watch-game-action-btn:hover {
   border-color: var(--color-bg-active);
-  opacity: 0.5;
   background: var(--color-bg-active);
   opacity: 0.1;
   color: var(--color-bg-active);
@@ -467,13 +467,13 @@
   background: var(--color-bg-active) !important;
   color: var(--color-text-light) !important;
   border: none !important;
-  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
-  opacity: 0.3;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  opacity: 1 !important;
 }
 
 .watch-game-action-btn-primary:hover {
   opacity: 0.9 !important;
-  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
   transform: translateY(-0.125rem);
 }
 
@@ -498,6 +498,7 @@
 .watch-streamer-card {
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -546,6 +547,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
+  text-align: left;
 }
 
 @media (min-width: 640px) {
@@ -586,7 +588,7 @@
 
 .watch-streamer-platform-icon-wrapper-kick {
   background: rgba(34, 197, 94, 0.1);
-  border-color: rgba(134, 239, 172, 0.3);
+  border-color: rgb(50, 239, 119);
 }
 
 .watch-streamer-platform-icon-wrapper-chesscom {
@@ -615,7 +617,7 @@
 }
 
 .watch-streamer-platform-icon-kick {
-  color: rgb(134, 239, 172);
+  color: rgb(16, 241, 99);
 }
 
 .watch-streamer-platform-icon-chesscom {
@@ -727,6 +729,7 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -788,6 +791,7 @@
 .watch-tournament-card {
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -823,6 +827,8 @@
   position: relative;
   padding: 1rem 1.25rem 0.75rem;
   z-index: 10;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -946,16 +952,20 @@
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
+  max-width: 100%;
   padding: 0.5rem 0.75rem;
   border-radius: 9999px;
+  box-sizing: border-box;
   background: var(--color-bg-active);
   color: var(--color-text-light);
   font-size: 0.75rem;
   font-weight: 600;
-  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
-  opacity: 0.3;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  opacity: 1;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @media (min-width: 640px) {
@@ -967,8 +977,9 @@
 
 .watch-tournament-btn:hover {
   opacity: 0.9;
-  box-shadow: 0 10px 15px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
   transform: translateY(-0.125rem);
+  color: var(--color-text-light);
 }
 
 .watch-tournament-btn-icon {
@@ -988,6 +999,7 @@
 .watch-error-card {
   padding: 2rem;
   text-align: center;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -1124,6 +1136,7 @@
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   padding: 1.5rem;
+  box-sizing: border-box;
   animation: fadeIn 0.2s ease-in-out;
 }
 
@@ -1174,9 +1187,9 @@
 
 .watch-modal-close-btn:hover {
   background: var(--color-bg-active);
-  opacity: 0.1;
   border-color: var(--color-bg-active);
-  opacity: 0.5;
+  opacity: 0.1;
+  color: var(--color-bg-active);
 }
 
 .watch-modal-close-icon {
@@ -1233,7 +1246,6 @@
 
 .watch-modal-view-link:hover {
   border-color: var(--color-bg-active);
-  opacity: 0.5;
   background: var(--color-bg-active);
   opacity: 0.1;
   color: var(--color-bg-active);

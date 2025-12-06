@@ -110,78 +110,12 @@ export function Player() {
   
   const safeGames = Array.isArray(filteredGames) ? filteredGames : []
   
-  // Calculate stats from API data (more accurate than counting filteredGames)
-  let totalGames = 0
-  let totalWins = 0
-  let totalDraws = 0
-  let totalLosses = 0
-  
-  // Add Chess.com stats
-  if (chesscomStats) {
-    if (chesscomStats.rapid) {
-      totalGames += chesscomStats.rapid.games || 0
-      totalWins += chesscomStats.rapid.wins || 0
-      totalDraws += chesscomStats.rapid.draws || 0
-      totalLosses += chesscomStats.rapid.losses || 0
-    }
-    if (chesscomStats.blitz) {
-      totalGames += chesscomStats.blitz.games || 0
-      totalWins += chesscomStats.blitz.wins || 0
-      totalDraws += chesscomStats.blitz.draws || 0
-      totalLosses += chesscomStats.blitz.losses || 0
-    }
-    if (chesscomStats.bullet) {
-      totalGames += chesscomStats.bullet.games || 0
-      totalWins += chesscomStats.bullet.wins || 0
-      totalDraws += chesscomStats.bullet.draws || 0
-      totalLosses += chesscomStats.bullet.losses || 0
-    }
-    if (chesscomStats.daily) {
-      totalGames += chesscomStats.daily.games || 0
-      totalWins += chesscomStats.daily.wins || 0
-      totalDraws += chesscomStats.daily.draws || 0
-      totalLosses += chesscomStats.daily.losses || 0
-    }
-    if (chesscomStats.classical) {
-      totalGames += chesscomStats.classical.games || 0
-      totalWins += chesscomStats.classical.wins || 0
-      totalDraws += chesscomStats.classical.draws || 0
-      totalLosses += chesscomStats.classical.losses || 0
-    }
-  }
-  
-  // Add Lichess stats
-  if (lichessStats) {
-    if (lichessStats.rapid && lichessStats.rapid.games > 0) {
-      totalGames += lichessStats.rapid.games || 0
-      totalWins += lichessStats.rapid.wins || 0
-      totalDraws += lichessStats.rapid.draws || 0
-      totalLosses += lichessStats.rapid.losses || 0
-    }
-    if (lichessStats.blitz && lichessStats.blitz.games > 0) {
-      totalGames += lichessStats.blitz.games || 0
-      totalWins += lichessStats.blitz.wins || 0
-      totalDraws += lichessStats.blitz.draws || 0
-      totalLosses += lichessStats.blitz.losses || 0
-    }
-    if (lichessStats.bullet && lichessStats.bullet.games > 0) {
-      totalGames += lichessStats.bullet.games || 0
-      totalWins += lichessStats.bullet.wins || 0
-      totalDraws += lichessStats.bullet.draws || 0
-      totalLosses += lichessStats.bullet.losses || 0
-    }
-    if (lichessStats.classical && lichessStats.classical.games > 0) {
-      totalGames += lichessStats.classical.games || 0
-      totalWins += lichessStats.classical.wins || 0
-      totalDraws += lichessStats.classical.draws || 0
-      totalLosses += lichessStats.classical.losses || 0
-    }
-  }
-  
-  // Fallback to counting filteredGames if stats API data is not available
+  // Calculate stats from the games list (matches what's displayed on the page)
+  // Note: Stats API returns lifetime stats, but games list only shows last 6 months
+  // So we count from the games list for consistency
   const stats = {
-    total: totalGames > 0 ? totalGames : safeGames.length,
-    wins: totalWins > 0 ? totalWins : safeGames.filter(g => {
+    total: safeGames.length,
+    wins: safeGames.filter(g => {
       if (!g) return false
       const white = (g.white || '').toLowerCase()
       const black = (g.black || '').toLowerCase()
@@ -189,8 +123,8 @@ export function Player() {
       const isBlack = black === chesscomUsername || black === lichessUsername
       return (isWhite && g.result === '1-0') || (isBlack && g.result === '0-1')
     }).length,
-    draws: totalDraws > 0 ? totalDraws : safeGames.filter(g => g && g.result === '1/2-1/2').length,
-    losses: totalLosses > 0 ? totalLosses : safeGames.filter(g => {
+    draws: safeGames.filter(g => g && g.result === '1/2-1/2').length,
+    losses: safeGames.filter(g => {
       if (!g) return false
       const white = (g.white || '').toLowerCase()
       const black = (g.black || '').toLowerCase()

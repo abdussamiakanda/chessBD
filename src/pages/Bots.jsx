@@ -5,7 +5,7 @@ import { useSEO } from '../hooks/use-seo'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuthStore } from '../store/auth-store'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Package } from 'lucide-react'
+import { ArrowRight, Package, Bot, Cpu } from 'lucide-react'
 import { getBots } from '../lib/bots'
 import './Bots.css'
 
@@ -93,6 +93,58 @@ export function Bots() {
               })}
             </div>
           )}
+        </section>
+
+        {/* Bot Features Section */}
+        <section className="bots-features-section">
+          <div className="bots-features-header">
+            <div className="bots-features-header-text">
+              <p className="bots-features-label">Features</p>
+              <h2 className="bots-features-title">Bot Features</h2>
+              <p className="bots-features-description">Explore advanced bot interactions</p>
+            </div>
+          </div>
+          <div className="bots-features-grid">
+            <Link to="/bot-vs-bot" className="bots-feature-link">
+              <Card className="bots-feature-card">
+                <div className="bots-feature-content">
+                  <div className="bots-feature-header">
+                    <div className="bots-feature-icon-wrapper">
+                      <Bot className="bots-feature-icon" />
+                    </div>
+                    <h3 className="bots-feature-title">Bot vs Bot</h3>
+                  </div>
+                  <p className="bots-feature-description">
+                    Watch two bots play against each other. Select any two bots and see them compete.
+                  </p>
+                  <div className="bots-feature-cta">
+                    <span>Try Bot vs Bot</span>
+                    <ArrowRight className="bots-feature-cta-icon" />
+                  </div>
+                </div>
+              </Card>
+            </Link>
+
+            <Link to="/bot-tournaments" className="bots-feature-link">
+              <Card className="bots-feature-card">
+                <div className="bots-feature-content">
+                  <div className="bots-feature-header">
+                    <div className="bots-feature-icon-wrapper">
+                      <Cpu className="bots-feature-icon" />
+                    </div>
+                    <h3 className="bots-feature-title">Bot Tournaments</h3>
+                  </div>
+                  <p className="bots-feature-description">
+                    Create and watch tournaments where bots compete in round-robin format. Admin only.
+                  </p>
+                  <div className="bots-feature-cta">
+                    <span>View Tournaments</span>
+                    <ArrowRight className="bots-feature-cta-icon" />
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          </div>
         </section>
       </div>
     </Container>

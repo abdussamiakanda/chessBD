@@ -8,7 +8,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { useAuthStore } from '../store/auth-store'
 import { useChessEngine } from '../hooks/useChessEngine'
 import { PawnIcon } from '../components/ui/ChessPieceIcons'
-import { Play, RefreshCw, Check } from 'lucide-react'
+import { Play, RefreshCw, Check, Brain } from 'lucide-react'
 import { PageLoader } from '../components/ui/PageLoader'
 import './Engine.css'
 
@@ -30,6 +30,7 @@ export function Engine() {
   const [playAsBlack, setPlayAsBlack] = useState(false)
   const [isEngineThinking, setIsEngineThinking] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
+  const [gameEnded, setGameEnded] = useState(false)
   const sectionRef = useRef(null)
   
   const pgn = location.state?.pgn
@@ -138,6 +139,12 @@ export function Engine() {
         })
         setIsWhiteTurn(gameCopy.turn() === 'w')
         
+        // Check if game ended after user's move
+        if (gameCopy.isGameOver() || gameCopy.isDraw() || gameCopy.isCheckmate() || gameCopy.isStalemate()) {
+          setIsRunning(false)
+          setGameEnded(true)
+        }
+        
         // Update UCI move history for API
         const uciMove = sourceSquare + targetSquare + (move.promotion || '')
         setMoveHistoryUci(prev => [...prev, uciMove])
@@ -209,8 +216,10 @@ export function Engine() {
         const currentGame = new Chess(game.fen())
         
         // Check if game is over
-        if (currentGame.isGameOver() || currentGame.isDraw()) {
+        if (currentGame.isGameOver() || currentGame.isDraw() || currentGame.isCheckmate() || currentGame.isStalemate()) {
           setIsEngineThinking(false)
+          setIsRunning(false)
+          setGameEnded(true)
           return
         }
         
@@ -266,6 +275,12 @@ export function Engine() {
         })
         setIsWhiteTurn(currentGame.turn() === 'w')
         
+        // Check if game ended after engine's move
+        if (currentGame.isGameOver() || currentGame.isDraw() || currentGame.isCheckmate() || currentGame.isStalemate()) {
+          setIsRunning(false)
+          setGameEnded(true)
+        }
+        
         // Update UCI move history
         const uciMove = engineMove.from + engineMove.to + (engineMove.promotion || '')
         setMoveHistoryUci(prev => [...prev, uciMove])
@@ -288,6 +303,12 @@ export function Engine() {
               
               const uciMove = engineMove.from + engineMove.to + (engineMove.promotion || '')
               setMoveHistoryUci(prev => [...prev, uciMove])
+              
+              // Check if game ended after fallback move
+              if (fallbackGame.isGameOver() || fallbackGame.isDraw() || fallbackGame.isCheckmate() || fallbackGame.isStalemate()) {
+                setIsRunning(false)
+                setGameEnded(true)
+              }
             }
           } else {
             setIsWhiteTurn(true)
@@ -302,6 +323,16 @@ export function Engine() {
 
     makeEngineMove()
   }, [isWhiteTurn, game, isEngineThinking, playAsBlack, gameStarted, currentMoveIndex, moves.length, user, engine])
+
+  // Check if game ended whenever game state changes
+  useEffect(() => {
+    if (game && gameStarted && !gameEnded) {
+      if (game.isGameOver() || game.isDraw() || game.isCheckmate() || game.isStalemate()) {
+        setIsRunning(false)
+        setGameEnded(true)
+      }
+    }
+  }, [game, gameStarted, gameEnded])
 
   const handleMoveClick = (moveIndex) => {
     // If moveIndex is -1, go to start position
@@ -408,6 +439,58 @@ export function Engine() {
     setBlackTime(600)
     setGameStarted(false)
     setIsRunning(false)
+    setGameEnded(false)
+  }
+
+  const handleGameReview = () => {
+    if (moves.length === 0) return
+    
+    // Create a fresh game from starting position and replay all moves
+    const cleanGame = new Chess()
+    for (const move of moves) {
+      try {
+        if (move.from && move.to) {
+          cleanGame.move({ from: move.from, to: move.to, promotion: move.promotion })
+        } else if (move.san) {
+          cleanGame.move(move.san)
+        }
+      } catch (e) {
+        // Error replaying move
+      }
+    }
+    
+    // Determine result
+    let result = '*'
+    if (cleanGame.isCheckmate()) {
+      result = cleanGame.turn() === 'w' ? '0-1' : '1-0'
+    } else if (cleanGame.isDraw() || cleanGame.isStalemate()) {
+      result = '1/2-1/2'
+    }
+    
+    // Get player names
+    const whiteName = whitePlayer.username || whitePlayer.name || 'White'
+    const blackName = blackPlayer.username || blackPlayer.name || 'Black'
+    
+    // Generate PGN with proper headers
+    const today = new Date()
+    const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`
+    
+    cleanGame.header('Event', "Let's Play!")
+    cleanGame.header('Site', 'Chess.com')
+    cleanGame.header('Date', dateStr)
+    cleanGame.header('Round', '?')
+    cleanGame.header('White', whiteName)
+    cleanGame.header('Black', blackName)
+    cleanGame.header('Result', result)
+    
+    const pgn = cleanGame.pgn()
+    
+    if (!pgn || pgn.trim() === '') return
+    
+    // Store PGN in sessionStorage BEFORE opening new tab
+    sessionStorage.setItem('analysis-pgn', pgn)
+    // Open in new tab after setting sessionStorage
+    window.open('/analysis', '_blank')
   }
 
   const handlePlayAsBlack = () => {
@@ -545,6 +628,17 @@ export function Engine() {
                     )}
                   </button>
                 </div>
+                {gameEnded && (
+                  <div className="engine-review-btn-wrapper">
+                    <button
+                      className="engine-control-btn game-card-action-btn-primary"
+                      onClick={handleGameReview}
+                    >
+                      <Brain size={16} />
+                      <span>Review</span>
+                    </button>
+                  </div>
+                )}
               </div>
               <MoveHistory
                 moves={moves}

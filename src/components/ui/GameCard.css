@@ -246,6 +246,7 @@
 .game-card-action-btn-primary {
   background: var(--color-bg-active) !important;
   color: var(--color-text-light) !important;
+  border-color: var(--color-bg-active) !important;
   box-shadow: 0 3px 5px -3px var(--color-bg-active), 0 4px 6px -2px var(--color-bg-active) !important;
 }
 

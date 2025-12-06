@@ -40,10 +40,12 @@ import { Learn } from './pages/Learn'
 import { LearnCategory } from './pages/learn/LearnCategory'
 import { Analysis } from './pages/Analysis'
 import { Engine } from './pages/Engine'
-import { Test } from './pages/Test'
+import { BotVsBot } from './pages/BotVsBot'
+import { BotTournaments } from './pages/BotTournaments'
 import { Bots } from './pages/Bots'
 import { BotGame } from './pages/BotGame'
-// import { Arena } from './pages/Arena'
+import { GameLive } from './pages/GameLive'
+import { Arena } from './pages/Arena'
 import { VideoTutorials } from './pages/learn/VideoTutorials'
 import { Puzzles } from './pages/Puzzles'
 import { InteractiveLessons } from './pages/learn/InteractiveLessons'
@@ -56,7 +58,7 @@ import './App.css'
 
 function App() {
   const location = useLocation()
-  const isFullHeightPage = location.pathname === '/analysis' || location.pathname === '/engine' || location.pathname === '/test' || location.pathname === '/puzzles' || location.pathname.startsWith('/bots/')
+  const isFullHeightPage = location.pathname === '/analysis' || location.pathname === '/engine' || location.pathname === '/bot-vs-bot' || location.pathname === '/bot-tournaments' || location.pathname === '/puzzles' || location.pathname === '/arena' || location.pathname.startsWith('/bots/')
   const { setUser, setLoading } = useAuthStore()
 
   // Trigger backend endpoint on app load
@@ -237,10 +239,12 @@ function App() {
           <Route path="/learn/:category" element={<LearnCategory />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/engine" element={<Engine />} />
-          <Route path="/test" element={<Test />} />
+          <Route path="/bot-vs-bot" element={<BotVsBot />} />
+          <Route path="/bot-tournaments" element={<BotTournaments />} />
           <Route path="/bots" element={<Bots />} />
           <Route path="/bots/:botId" element={<BotGame />} />
-          {/* <Route path="/arena" element={<Arena />} /> */}
+          <Route path="/game/live/:id" element={<GameLive />} />
+          <Route path="/arena" element={<Arena />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/showcase" element={<Showcase />} />
           <Route path="/events" element={<Events />} />

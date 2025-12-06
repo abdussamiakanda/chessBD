@@ -11,6 +11,7 @@ import { useChessEngine } from '../hooks/useChessEngine'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { openings } from '../lib/engine/openings'
+import { getBots, getBotIcon } from '../lib/bots/index.js'
 import { Upload, FileText, Loader2, X, TrendingUp, Star, ThumbsUp, CheckCircle, BookOpen, HelpCircle, AlertCircle, Users, Calendar, Sparkles, XCircle, Zap, AlertTriangle } from 'lucide-react'
 import { ChesscomIcon } from '../components/ui/ChesscomIcon'
 import { PageLoader } from '../components/ui/PageLoader'
@@ -1051,13 +1052,60 @@ export function Analysis() {
 
   // Update player avatars when allUsers loads and we have a game
   useEffect(() => {
-    if (!allUsers || !hasGame || !whitePlayer.name || !blackPlayer.name) {
-      console.log('Avatar update skipped:', { 
-        allUsers: !!allUsers, 
-        hasGame, 
-        whiteName: whitePlayer.name, 
-        blackName: blackPlayer.name 
-      })
+    if (!hasGame || !whitePlayer.name || !blackPlayer.name) {
+      return
+    }
+    
+    const availableBots = getBots()
+    const whiteNameNormalized = whitePlayer.name.toLowerCase().trim()
+    const blackNameNormalized = blackPlayer.name.toLowerCase().trim()
+    
+    // Check for Stockfish
+    const stockfishNames = ['stockfish', 'stockfish 17', 'stockfish17']
+    const isWhiteStockfish = stockfishNames.includes(whiteNameNormalized)
+    const isBlackStockfish = stockfishNames.includes(blackNameNormalized)
+    
+    // Check for bots
+    const whiteBot = availableBots.find(b => 
+      b.name.toLowerCase().trim() === whiteNameNormalized ||
+      b.id.toLowerCase().trim() === whiteNameNormalized
+    )
+    const blackBot = availableBots.find(b => 
+      b.name.toLowerCase().trim() === blackNameNormalized ||
+      b.id.toLowerCase().trim() === blackNameNormalized
+    )
+    
+    // Get bot avatars
+    let whiteAvatar = null
+    let blackAvatar = null
+    
+    if (isWhiteStockfish) {
+      whiteAvatar = 'https://stockfishchess.org/images/logo/icon_512x512@2x.webp'
+    } else if (whiteBot) {
+      whiteAvatar = whiteBot.icon || getBotIcon(whiteBot.id)
+    }
+    
+    if (isBlackStockfish) {
+      blackAvatar = 'https://stockfishchess.org/images/logo/icon_512x512@2x.webp'
+    } else if (blackBot) {
+      blackAvatar = blackBot.icon || getBotIcon(blackBot.id)
+    }
+    
+    // If we found bot avatars, update them immediately
+    if (whiteAvatar || blackAvatar) {
+      setWhitePlayer(prev => ({
+        ...prev,
+        avatar: whiteAvatar || prev.avatar
+      }))
+      setBlackPlayer(prev => ({
+        ...prev,
+        avatar: blackAvatar || prev.avatar
+      }))
+      return // Don't check for chessbd users if we found bots
+    }
+    
+    // Otherwise, check for chessbd users
+    if (!allUsers) {
       return
     }
     
@@ -1065,14 +1113,8 @@ export function Analysis() {
     const usersArray = Array.isArray(allUsers) ? allUsers : Object.values(allUsers || {})
     
     if (usersArray.length === 0) {
-      console.log('No users found in allUsers')
       return
     }
-    
-    const whiteNameNormalized = whitePlayer.name.toLowerCase().trim()
-    const blackNameNormalized = blackPlayer.name.toLowerCase().trim()
-    
-    console.log('Checking for chessbd users:', { whiteNameNormalized, blackNameNormalized, allUsersCount: usersArray.length })
     
     // Find chessbd user for white player
     const whiteChessbdUser = usersArray.find(u => {
@@ -1094,11 +1136,6 @@ export function Analysis() {
              userLichess.replace(/\s+/g, '') === blackNameNormalized.replace(/\s+/g, '')
     })
     
-    console.log('Found chessbd users:', { 
-      whiteChessbdUser: whiteChessbdUser ? { name: whiteChessbdUser.name, avatar: whiteChessbdUser.avatar_url } : null,
-      blackChessbdUser: blackChessbdUser ? { name: blackChessbdUser.name, avatar: blackChessbdUser.avatar_url } : null
-    })
-    
     // Update player info if chessbd users found (use chessbd user's name and avatar)
     if (whiteChessbdUser || blackChessbdUser) {
       setWhitePlayer(prev => ({
@@ -1111,7 +1148,6 @@ export function Analysis() {
         name: blackChessbdUser?.name || prev.name,
         avatar: blackChessbdUser?.avatar_url || prev.avatar
       }))
-      console.log('Updated player avatars and names')
     }
   }, [allUsers, hasGame, whitePlayer.name, blackPlayer.name])
 

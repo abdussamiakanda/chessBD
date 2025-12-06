@@ -1,0 +1,846 @@
+.arena-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+  z-index: 1;
+  margin-top: 3.5rem;
+}
+
+@media (max-width: 767px) {
+  .arena-page {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .arena-page {
+    margin-top: 0;
+    margin-left: 180px;
+    width: calc(100% - 180px);
+  }
+}
+
+.arena-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.arena-board-section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .arena-container {
+    overflow: visible;
+    min-height: 100%;
+    flex-direction: column;
+  }
+
+  .arena-board-section {
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    flex: 0 0 auto;
+    min-height: 450px;
+    height: auto;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .arena-content-section {
+    flex: 1;
+    min-height: 300px;
+  }
+}
+
+.arena-content-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+  min-height: 0;
+}
+
+.arena-controls {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  flex-shrink: 0;
+  gap: 0.75rem;
+}
+
+.arena-controls-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.arena-players-count-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.arena-exit-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.arena-exit-btn:hover {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-bg-active);
+  color: var(--color-bg-active);
+}
+
+.arena-exit-btn:focus {
+  outline: none;
+}
+
+.arena-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.arena-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  box-sizing: border-box;
+}
+
+.arena-tab:hover:not(.active) {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-bg-active);
+  color: var(--color-bg-active);
+}
+
+.arena-tab.active {
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  border-color: var(--color-bg-active);
+}
+
+.arena-tab:focus {
+  outline: none;
+}
+
+.arena-tab-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.arena-challenge-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.arena-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.arena-player-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.arena-player-card:not(.in-match):hover {
+  border-color: var(--color-bg-active);
+  background: var(--color-bg-secondary);
+}
+
+.arena-player-card.in-match {
+  background: var(--color-bg-primary);
+  cursor: not-allowed;
+}
+
+.arena-player-card.in-match .arena-player-name,
+.arena-player-card.in-match .arena-player-status {
+  color: var(--color-text-secondary);
+}
+
+.arena-player-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.arena-player-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.arena-player-avatar-placeholder {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-active);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-bg-active);
+  flex-shrink: 0;
+}
+
+.arena-player-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  text-align: left;
+  flex: 1;
+}
+
+.arena-player-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arena-player-status {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arena-player-status-badge {
+  padding: 0.375rem 0.75rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-active);
+  color: var(--color-bg-active);
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.arena-challenge-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.arena-challenge-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.arena-challenge-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arena-challenge-btn:focus {
+  outline: none;
+}
+
+.arena-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.arena-empty svg {
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.arena-empty p {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.arena-game-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.arena-game-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.arena-game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arena-game-status svg {
+  color: var(--color-bg-active);
+}
+
+.arena-game-status h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.arena-game-status p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.arena-game-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.arena-resign-btn,
+.arena-draw-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arena-resign-btn:hover:not(:disabled),
+.arena-draw-btn:hover:not(:disabled) {
+  background: var(--color-bg-active);
+  border-color: var(--color-bg-active);
+  color: white;
+}
+
+.arena-resign-btn:disabled,
+.arena-draw-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arena-resign-btn svg,
+.arena-draw-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.arena-challenge-received,
+.arena-challenge-sent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+}
+
+.arena-challenge-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.arena-challenge-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-active);
+}
+
+.arena-challenge-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-bg-active);
+}
+
+.arena-challenge-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.arena-challenge-opponent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.arena-challenge-opponent-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+}
+
+.arena-challenge-opponent-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.arena-challenge-opponent-avatar-placeholder {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-bg-active);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-bg-active);
+  flex-shrink: 0;
+}
+
+.arena-challenge-opponent-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.arena-challenge-opponent-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.arena-challenge-opponent-status {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.arena-challenge-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.arena-challenge-accept-btn,
+.arena-challenge-decline-btn,
+.arena-challenge-cancel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.arena-challenge-accept-btn {
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  flex: 1;
+}
+
+.arena-challenge-accept-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.arena-challenge-decline-btn {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  flex: 1;
+}
+
+.arena-challenge-decline-btn:hover {
+  background: var(--color-bg-primary);
+  border-color: var(--color-border);
+}
+
+.arena-challenge-cancel-btn {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.arena-challenge-cancel-btn:hover {
+  background: var(--color-bg-primary);
+  border-color: var(--color-border);
+}
+
+.arena-challenge-accept-btn:focus,
+.arena-challenge-decline-btn:focus,
+.arena-challenge-cancel-btn:focus {
+  outline: none;
+}
+
+.arena-rankings-content {
+  padding: 1rem;
+}
+
+.arena-game-move-history {
+  margin-top: 1.5rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--color-border);
+  width: calc(100% + 2rem);
+  max-height: 400px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.arena-game-move-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.arena-game-move-history::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+  border-radius: 3px;
+}
+
+.arena-game-move-history::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.arena-game-move-history::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bg-active);
+}
+
+.arena-enter-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem;
+}
+
+.arena-enter-content {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arena-enter-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: var(--color-2);
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .arena-enter-icon-wrapper {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.arena-enter-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-bg-active);
+}
+
+@media (min-width: 640px) {
+  .arena-enter-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.arena-enter-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .arena-enter-title {
+    font-size: 1.875rem;
+  }
+}
+
+.arena-enter-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .arena-enter-description {
+    font-size: 1rem;
+  }
+}
+
+.arena-enter-players-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .arena-enter-players-count {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+.arena-enter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+}
+
+.arena-enter-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.arena-enter-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arena-enter-btn:focus {
+  outline: none;
+}
+
+.arena-enter-full {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0.5rem 0 0 0;
+}
+
+.arena-login-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem;
+}
+
+.arena-login-content {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.arena-login-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.arena-login-content p {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.arena-login-btn,
+.arena-signup-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--color-border);
+  margin: 0.5rem;
+  box-sizing: border-box;
+}
+
+.arena-login-btn:focus,
+.arena-signup-btn:focus {
+  outline: none;
+}
+
+.arena-login-btn {
+  background: var(--color-bg-active);
+  color: var(--color-text-light);
+  border-color: var(--color-bg-active);
+}
+
+.arena-login-btn:hover {
+  opacity: 0.9;
+}
+
+.arena-signup-btn {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+.arena-signup-btn:hover {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-bg-active);
+  color: var(--color-bg-active);
+}
+
+@media (max-width: 767px) {
+  .arena-login-btn,
+  .arena-signup-btn {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
