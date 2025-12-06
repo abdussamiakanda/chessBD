@@ -654,6 +654,119 @@ export function BotTournaments() {
     }
   }
 
+  // Calculate tie-breakers for standings
+  const calculateTieBreakers = (standings, matches) => {
+    // Create a map of botId -> points for quick lookup
+    const pointsMap = {}
+    Object.values(standings).forEach(s => {
+      pointsMap[s.botId] = s.points || 0
+    })
+
+    // Calculate Buchholz (sum of opponents' points) and Sonneborn-Berger for each bot
+    Object.values(standings).forEach(standing => {
+      const botId = standing.botId
+      let buchholz = 0
+      let sonnebornBerger = 0
+      const opponentScores = []
+
+      // Find all matches involving this bot
+      const botMatches = matches.filter(m => 
+        (m.whiteBot === botId || m.blackBot === botId) && m.status === 'completed' && m.result
+      )
+
+      botMatches.forEach(match => {
+        const opponentId = match.whiteBot === botId ? match.blackBot : match.whiteBot
+        const opponentPoints = pointsMap[opponentId] || 0
+        opponentScores.push(opponentPoints)
+        buchholz += opponentPoints
+
+        // Sonneborn-Berger: full points from wins, half from draws
+        if (match.result === '1-0' && match.whiteBot === botId) {
+          sonnebornBerger += opponentPoints
+        } else if (match.result === '0-1' && match.blackBot === botId) {
+          sonnebornBerger += opponentPoints
+        } else if (match.result === '1/2-1/2') {
+          sonnebornBerger += opponentPoints * 0.5
+        }
+      })
+
+      // Calculate Median Buchholz (Buchholz with highest and lowest opponent scores removed)
+      let medianBuchholz = buchholz
+      if (opponentScores.length > 2) {
+        const sortedScores = [...opponentScores].sort((a, b) => a - b)
+        const trimmed = sortedScores.slice(1, -1) // Remove lowest and highest
+        medianBuchholz = trimmed.reduce((sum, score) => sum + score, 0)
+      }
+
+      standing.buchholz = buchholz
+      standing.medianBuchholz = medianBuchholz
+      standing.sonnebornBerger = sonnebornBerger
+      standing.gamesPlayed = (standing.wins || 0) + (standing.losses || 0) + (standing.draws || 0)
+    })
+
+    return standings
+  }
+
+  // Sort standings with tie-breakers
+  const sortStandingsWithTieBreakers = (standingsArray, matches) => {
+    // First calculate tie-breakers
+    const standingsWithTieBreakers = calculateTieBreakers(
+      standingsArray.reduce((acc, s) => {
+        acc[s.botId] = s
+        return acc
+      }, {}),
+      matches
+    )
+
+    // Convert back to array and sort
+    return Object.values(standingsWithTieBreakers).sort((a, b) => {
+      // Primary: Points
+      if (b.points !== a.points) {
+        return b.points - a.points
+      }
+
+      // Tie-breaker 1: Direct encounter (head-to-head) - only if they played each other
+      const directMatch = matches.find(m => 
+        m.status === 'completed' && m.result &&
+        ((m.whiteBot === a.botId && m.blackBot === b.botId) ||
+         (m.whiteBot === b.botId && m.blackBot === a.botId))
+      )
+      if (directMatch) {
+        if (directMatch.result === '1-0') {
+          if (directMatch.whiteBot === a.botId) return -1
+          if (directMatch.whiteBot === b.botId) return 1
+        } else if (directMatch.result === '0-1') {
+          if (directMatch.blackBot === a.botId) return -1
+          if (directMatch.blackBot === b.botId) return 1
+        }
+        // If draw, continue to next tie-breaker
+      }
+
+      // Tie-breaker 2: Buchholz score (sum of opponents' points)
+      if (b.buchholz !== a.buchholz) {
+        return b.buchholz - a.buchholz
+      }
+
+      // Tie-breaker 4: Sonneborn-Berger score
+      if (b.sonnebornBerger !== a.sonnebornBerger) {
+        return b.sonnebornBerger - a.sonnebornBerger
+      }
+
+      // Tie-breaker 5: Number of wins
+      if (b.wins !== a.wins) {
+        return b.wins - a.wins
+      }
+
+      // Tie-breaker 6: Games played (more games = better, shows consistency)
+      if (b.gamesPlayed !== a.gamesPlayed) {
+        return b.gamesPlayed - a.gamesPlayed
+      }
+
+      // Final tie-breaker: Alphabetical by botId (deterministic)
+      return a.botId.localeCompare(b.botId)
+    })
+  }
+
   // Update tournament standings
   const updateTournamentStandings = async (tournamentId, whiteBotId, blackBotId, result) => {
     const standingsRef = ref(rtdb, `botTournaments/${tournamentId}/standings`)
@@ -687,8 +800,21 @@ export function BotTournaments() {
     }
 
     await set(standingsRef, standings)
-    const standingsArray = Object.values(standings).sort((a, b) => b.points - a.points)
-    setTournamentStandings(standingsArray)
+    
+    // Get matches for tie-breaker calculation
+    const matchesRef = ref(rtdb, `botTournaments/${tournamentId}/matches`)
+    const matchesSnapshot = await get(matchesRef)
+    const matches = matchesSnapshot.val() ? Object.values(matchesSnapshot.val()) : []
+    
+    // Convert standings to array with botId
+    const standingsArray = Object.entries(standings).map(([botId, data]) => ({
+      botId,
+      ...data
+    }))
+    
+    // Sort with tie-breakers
+    const sortedStandings = sortStandingsWithTieBreakers(standingsArray, matches)
+    setTournamentStandings(sortedStandings)
   }
 
   // Load tournament data
@@ -747,11 +873,16 @@ export function BotTournaments() {
             setExternalBots(tournamentToShow.externalBots)
           }
           
-          // Convert standings object to array and sort
-          const standings = tournamentToShow.standings
-            ? Object.values(tournamentToShow.standings).sort((a, b) => b.points - a.points)
-            : []
-          setTournamentStandings(standings)
+          // Convert standings object to array and sort with tie-breakers
+          let sortedStandings = []
+          if (tournamentToShow.standings) {
+            const standingsArray = Object.entries(tournamentToShow.standings).map(([botId, data]) => ({
+              botId,
+              ...data
+            }))
+            sortedStandings = sortStandingsWithTieBreakers(standingsArray, matches)
+          }
+          setTournamentStandings(sortedStandings)
           
           setIsTournamentRunning(tournamentToShow.status === 'running')
         } else {
@@ -1372,10 +1503,10 @@ export function BotTournaments() {
                               <div key={standing.botId} className="tournament-standings-row">
                                 <span>{index + 1}</span>
                                 <span>{botName}</span>
-                                <span>{standing.wins}</span>
-                                <span>{standing.losses}</span>
-                                <span>{standing.draws}</span>
-                                <span>{standing.points}</span>
+                                <span>{standing.wins || 0}</span>
+                                <span>{standing.losses || 0}</span>
+                                <span>{standing.draws || 0}</span>
+                                <span>{standing.points || 0}</span>
                               </div>
                             )
                           })}
@@ -1771,10 +1902,10 @@ export function BotTournaments() {
                               <div key={standing.botId} className="tournament-standings-row">
                                 <span>{index + 1}</span>
                                 <span>{botName}</span>
-                                <span>{standing.wins}</span>
-                                <span>{standing.losses}</span>
-                                <span>{standing.draws}</span>
-                                <span>{standing.points}</span>
+                                <span>{standing.wins || 0}</span>
+                                <span>{standing.losses || 0}</span>
+                                <span>{standing.draws || 0}</span>
+                                <span>{standing.points || 0}</span>
                               </div>
                             )
                           })}
@@ -1861,10 +1992,10 @@ export function BotTournaments() {
                           <div key={standing.botId} className="tournament-standings-row">
                             <span>{index + 1}</span>
                             <span>{botName}</span>
-                            <span>{standing.wins}</span>
-                            <span>{standing.losses}</span>
-                            <span>{standing.draws}</span>
-                            <span>{standing.points}</span>
+                            <span>{standing.wins || 0}</span>
+                            <span>{standing.losses || 0}</span>
+                            <span>{standing.draws || 0}</span>
+                            <span>{standing.points || 0}</span>
                           </div>
                         )
                       })}
